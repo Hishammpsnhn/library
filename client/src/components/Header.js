@@ -3,7 +3,7 @@ import Librery from "../Assets/library-svgrepo-com (1).svg";
 import styles from "../styles";
 function Header() {
   return (
-    <div className="text-white font-poppins flex p-4 items-center justify-between ">
+    <div className="text-white shadow font-poppins flex p-4 items-center justify-between ">
       <div className="w-full flex items-center ">
         <div className="text-white ss:text-[40px]  text-[20px] mr-1  ss:mr-4 ">
           <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-600  to-blue-400" >Library</span>{" "}
