@@ -1,4 +1,5 @@
 import "./App.css";
+import Details from "./components/Details";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
@@ -13,9 +14,14 @@ function App() {
         </div>
       </div>
       <div className="bg-gradient-to-r from-black via-slate-800 to-black ">
-      <Hero/>
+        {/* <Hero/> */}
       </div>
-      <Footer />
+      <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
+        <Details />
+      </div>
+      <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
+        <Footer />
+      </div>
     </div>
   );
 }
