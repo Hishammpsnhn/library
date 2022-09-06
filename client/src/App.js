@@ -1,29 +1,24 @@
 import "./App.css";
+import AdminHero from "./components/Admin/AdminHero";
+import Form from "./components/Admin/Form";
+import Modal from "./components/Admin/Modal";
 import Details from "./components/Details";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
+import DetailsPage from "./pages/user-page/detailsPage";
+import Home from "./pages/user-page/Home";
 import styles from "./styles";
 
 function App() {
   return (
-    <div className="bg-primary w-full overflow-hidden  ">
-      <div className={`${styles.flexCenter} ${styles.paddingX}`}>
-        <div className={`${styles.boxWidth}`}>
-          <Header />
-        </div>
-      </div>
-      <div className="bg-gradient-to-r from-black via-slate-800 to-black ">
-        {/* <Hero/> */}
-      </div>
-      <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
-        <Details />
-      </div>
-      <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
-        <Footer />
-      </div>
-    </div>
-  );
+   <div className='overflow-hidden ' >
+    {/* <Home/> */}
+    {/* <DetailsPage/> */}
+    <AdminHero/>
+
+   </div>
+    );
 }
 
 export default App;
