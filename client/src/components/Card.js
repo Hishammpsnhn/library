@@ -1,7 +1,13 @@
 import React from "react";
 import Button from "./Button";
-
+import { useNavigate } from "react-router-dom";
 function Card() {
+  const navigate = useNavigate();
+  
+  const handleDetails = () => {
+    navigate('/details')
+  };
+
   return (
     <div class="bg-slate-900  mx-auto max-w-sm rounded-xl overflow-hidden  ">
       <img
@@ -17,7 +23,7 @@ function Card() {
           nihil.
         </p>
       </div>
-      <Button/>
+      <Button action={handleDetails} />
     </div>
   );
 }

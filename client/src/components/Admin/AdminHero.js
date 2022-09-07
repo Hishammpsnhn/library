@@ -99,7 +99,7 @@ function AdminHero() {
         <Modal setModal={setModal} />
       </div>
       <div className={`${form ? "flex" : "hidden"}  `}>
-        <div className="bg-white absolute top-[150px] left-0 right-0 ml-auto mr-auto w-[60%]">
+        <div className="bg-white absolute top-[150px] left-0 right-0 ml-auto mr-auto w-[90%] sm:w-[60%]  ">
           <Form setForm={setForm} />
         </div>
       </div>
