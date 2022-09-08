@@ -1,30 +1,36 @@
 const express = require("express");
+const app = express();
 const dotenv = require("dotenv");
 const http = require("http");
-const mongoose  = require("mongoose");
+const mongoose = require("mongoose");
+const userRoutes = require("./Routes/userRoutes");
+const productRoutes = require("./Routes/productRoutes");   
 
-const app = express();
+// Telling our Node app to include all these modules
+// const session = require("express-session");
+// const passport = require("passport");
+// const passportLocalMongoose = require("passport-local-mongoose");
+// const Users = require("./models/userModel");
+// const { application } = require("express");
+// const flash = require("express-flash");
+
 dotenv.config();
-const server = http.createServer(app);
 app.use(express.json()); //accept json data
 
-
-
-
 app.get("/", (req, res) => {
-  res.send("Chatting app server started");
+  res.send("Liberary app server started");
 });
 
 // app.use("/api/user", userRoutes);
-// app.use("/api/chat", chatRoutes);
-// app.use("/api/message", messageRoutes);
-// app.use("/api/notification", notifRouter);
-// app.use(notfound);
-// app.use(errorhandler);
+app.use("/api/product",productRoutes)
 
 const port = process.env.PORT || 5000;
-mongoose.connect( process.env.CONNECTION_URL, {
+mongoose
+  .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
-    UseUnifiedTopology: true
-}).then(() => app.listen(port, () => console.log(`server runnig on port : ${port}`)))
-.catch((err)=> console.log(err.message) )
+    UseUnifiedTopology: true,
+  })
+  .then(() =>
+    app.listen(port, () => console.log(`server runnig on port : ${port}`))
+  )
+  .catch((err) => console.log(err.message));
