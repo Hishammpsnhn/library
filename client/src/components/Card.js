@@ -5,11 +5,12 @@ function Card() {
   const navigate = useNavigate();
   
   const handleDetails = () => {
-    navigate('/details')
+    navigate('/purchase')
   };
 
   return (
     <div class="bg-slate-900  mx-auto max-w-sm rounded-xl overflow-hidden  ">
+     <div >
       <img
         className="w-full h-[250px]"
         src="https://godofsmallthing.com/myfiles/2020/08/The-Man-who-Saw-Everything-Fiction-Book-1334x2048.jpg"
@@ -22,6 +23,7 @@ function Card() {
           quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
           nihil.
         </p>
+      </div>
       </div>
       <Button action={handleDetails} />
     </div>

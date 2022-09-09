@@ -11,6 +11,7 @@ import Home from "./pages/user-page/Home";
 import styles from "./styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./components/Auth";
+import PurchasePage from "./pages/user-page/PurchasePage";
 
 function App() {
   return (
@@ -18,9 +19,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminHero />} />
           <Route path="/details" element={<DetailsPage />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/purchase" element={<PurchasePage />} />
         </Routes>
       </BrowserRouter>
     </div>

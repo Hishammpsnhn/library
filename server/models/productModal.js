@@ -3,7 +3,7 @@ const reviewSchema = require("./review");
 
 const userModel = mongoose.Schema(
   {
-    bookName: { type: String, required: true, unique: true },
+    bookname: { type: String, required: true, },
     image: { type: String, required: true },
     author: { type: String, required: true },
     description: { type: String },
@@ -21,5 +21,5 @@ const userModel = mongoose.Schema(
   }
 );
 
-const Users = mongoose.model("User", userModel);
-module.exports = Users;
+const productModal = mongoose.model("products", userModel);
+module.exports = productModal;
