@@ -3,7 +3,7 @@ const reviewSchema = require("./review");
 
 const userModel = mongoose.Schema(
   {
-    bookname: { type: String, required: true, },
+    bookname: { type: String,required: true},
     image: { type: String, required: true },
     author: { type: String, required: true },
     description: { type: String },

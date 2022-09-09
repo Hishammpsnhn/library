@@ -1,7 +1,8 @@
 import React from 'react'
+import Button from '../Button'
 import Details from '../Details'
 
-function OrderSummary() {
+function OrderSummary({setStepper}) {
     return (
         <div className='h-fit' >
             <h2 className='text-white text-xl font-medium pt-5 '>Delivary to:</h2>
@@ -26,6 +27,7 @@ function OrderSummary() {
 
                 <p>Total: $980</p>
             </div>
+            <Button text="Continue" action={() => setStepper(2)} style='mt-5'  />
         </div>
     )
 }

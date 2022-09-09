@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getProduct } from "../../action/ProductAction";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import styles from "../../styles";
 
 function Home() {
+
+  useEffect(() => {
+    getProduct()
+  },[])
+
   return (
     <>
       <div className="bg-primary w-full overflow-hidden  ">

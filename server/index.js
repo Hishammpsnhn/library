@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dotenv = require("dotenv");
 const http = require("http");
+const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const userRoutes = require("./Routes/userRoutes");
 const productRoutes = require("./Routes/productRoutes");   
@@ -14,6 +15,8 @@ const productRoutes = require("./Routes/productRoutes");
 // const { application } = require("express");
 // const flash = require("express-flash");
 
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 dotenv.config();
 app.use(express.json()); //accept json data
 

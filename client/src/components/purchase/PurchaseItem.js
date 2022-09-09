@@ -5,7 +5,7 @@ import OrderSummary from './OrderSummary';
 import Payment from './Payment';
 
 function PurchaseItem() {
-  const [stepper, setStepper] = useState(1)
+  const [stepper, setStepper] = useState(0)
   return (
     <>
     <section>
@@ -16,9 +16,9 @@ function PurchaseItem() {
       </Stepper>
     </section>
     <div className='md:w-[60%]    flex flex-row p-5 m-auto ' >
-     {stepper === 0 && <DelivaryDetails/> }  
-     {stepper === 1 && <OrderSummary/> }  
-     {stepper === 2 && <Payment/> }  
+     {stepper === 0 && <DelivaryDetails setStepper={setStepper} /> }  
+     {stepper === 1 && <OrderSummary  setStepper={setStepper}  /> }  
+     {stepper === 2 && <Payment  setStepper={setStepper}  /> }  
     </div>
       </>
   )

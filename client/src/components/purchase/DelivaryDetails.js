@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../Button'
 
-function DelivaryDetails() {
+function DelivaryDetails({setStepper}) {
     return (
         <div className="w-full ">
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
@@ -83,7 +83,7 @@ function DelivaryDetails() {
                 </div>
                 <div className="flex items-center justify-center flex-row w-full">
                     <div className="w-[30%]">
-                        <Button text="SAVE" />
+                        <Button action={()=> setStepper(1)} text="SAVE" />
                     </div>
                     
                 </div>

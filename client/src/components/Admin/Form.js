@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import Button from "../Button";
+import FileBase64 from 'react-file-base64'
+import { addProductActions} from "../../action/ProductAction";
+
 
 function Form({ setForm }) {
-  const initialState = { bookName: "", author: "", desc: "", catagory: "" };
+  const initialState = { bookname: "", author: "", description: "", catagory: "", price: '', launch: '', image: "" };
   const [addProduct, setAddProduct] = useState(initialState);
-  console.log(addProduct);
-  const [image, setImage] = useState(null);
+
 
   const handleClose = () => {
     setForm((prev) => !prev);
   };
-  const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(URL.createObjectURL(event.target.files[0]));
-    }
-  };
 
+  const handleAddProduct = () => {
+    console.log(addProduct)
+    addProductActions(addProduct);
+  }
   return (
     <div className="w-full ">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
@@ -32,7 +33,7 @@ function Form({ setForm }) {
               id="username"
               type="text"
               onChange={(e) =>
-                setAddProduct({ ...addProduct, bookName: e.target.value })
+                setAddProduct({ ...addProduct, bookname: e.target.value })
               }
               placeholder="Book Name"
             />
@@ -68,7 +69,58 @@ function Form({ setForm }) {
             type="text"
             placeholder="Description"
             onChange={(e) =>
-              setAddProduct({ ...addProduct, desc: e.target.value })
+              setAddProduct({ ...addProduct, description: e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            published Year
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="number"
+            placeholder="published year"
+            onChange={(e) =>
+              setAddProduct({ ...addProduct, launch: e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            Price
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="price"
+            onChange={(e) =>
+              setAddProduct({ ...addProduct, price: e.target.value })
+            }
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            Discount
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="number"
+            placeholder="Discount in percentage"
+            onChange={(e) =>
+              setAddProduct({ ...addProduct, discount: e.target.value })
             }
           />
         </div>
@@ -85,7 +137,7 @@ function Form({ setForm }) {
               onChange={(e) =>
                 setAddProduct({ ...addProduct, catagory: e.target.value })
               }
-              // value={addProduct.catagory}
+            // value={addProduct.catagory}
 
             >
               <option value='' >Pick a choice!</option>
@@ -113,23 +165,20 @@ function Form({ setForm }) {
           >
             Upload Image
           </label>
-          <input
-            // onChange={}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
-            type="file"
-            accept="image/*"
-            placeholder="upload image"
-            onChange={onImageChange}
+          <FileBase64
+            type='file'
+            multiple={false}
+            onDone={({ base64 }) => setAddProduct({ ...addProduct, image:base64 })
+            }
           />
         </div>
-        <img className="w-[20%] md:w-[40%]" src={image} alt="upload image" />
+        {/* <img className="w-[20%] md:w-[40%]" src={ alt="upload image" /> */}
         <div className="flex flex-row w-full">
           <div className="w-[50%]">
             <Button action={handleClose} text="CLOSE" />
           </div>
           <div className="w-[50%]  ">
-            <Button text="ADD PRODUCT" />
+            <Button text="ADD PRODUCT" action={handleAddProduct} />
           </div>
         </div>
       </form>

@@ -1,10 +1,11 @@
 const productModel = require('../models/productModal')
 
-const addProduct = async (req, res) => {
+const addProduct = async (req, res) => { 
+    console.log(req.body)
     const { bookname, author, description, image, launch, price, catagory } = req.body;
-    if (!author || !bookname || !description || !image || !launch || !price || !catagory) {
-        throw new Error ('all inputs not found')
-    }
+    // if (!author || !bookname || !description || !image || !launch || !price || !catagory) {
+    //     throw new Error ('all inputs not found')
+    // }
     try {
         const products = await productModel.create({
             author,
