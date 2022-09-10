@@ -10,5 +10,6 @@ export const addProductActions = async(product)=>{
 }
 export const getProduct = async ()=>{
     const {data} = await api.getProduct()
-    console.log(data)
+    return data;
+
 }

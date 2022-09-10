@@ -10,7 +10,7 @@ function Card() {
 
   return (
     <div class="bg-slate-900  mx-auto max-w-sm rounded-xl overflow-hidden  ">
-     <div >
+     <div className="cursor-pointer"  onClick={()=> navigate('/details')}  >
       <img
         className="w-full h-[250px]"
         src="https://godofsmallthing.com/myfiles/2020/08/The-Man-who-Saw-Everything-Fiction-Book-1334x2048.jpg"

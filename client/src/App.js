@@ -12,10 +12,17 @@ import styles from "./styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Auth from "./components/Auth";
 import PurchasePage from "./pages/user-page/PurchasePage";
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from "react";
 
 function App() {
+  const count = useSelector((state) => state.counter.books)
+  console.log(count)
+
+
   return (
     <div className="overflow-hidden ">
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
