@@ -7,7 +7,6 @@ import styles from "../../styles";
 import { useDispatch } from "react-redux";
 import { getBooks, getBooksAsync } from '../../feature/counter/BooksSlice'
 
-
 function Home() {
   
   const dispatch = useDispatch();
@@ -15,7 +14,7 @@ function Home() {
 
   useEffect(() => {
     if(effectRan.current === false){
-      dispatch(getBooksAsync())
+      dispatch(getProduct)
     }
     effectRan.current = true
   }, [])

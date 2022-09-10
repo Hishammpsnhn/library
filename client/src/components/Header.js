@@ -13,7 +13,7 @@ function Header() {
       <div
         className={`${styles.flexCenter} w-full h-[35px] p-1 justify-evenly  flex bg-primary border  border-blue-300 rounded-lg`}
       >
-        <i  class="fa-solid fa-magnifying-glass"></i>
+        <i  className="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
           className="bg-primary border-gray-100 w-full outline-none text-[15px] "
