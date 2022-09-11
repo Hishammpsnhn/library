@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.send("Liberary app server started");
 });
 
-// app.use("/api/user", userRoutes);
+
 app.use("/api/product",productRoutes)
 
 const port = process.env.PORT || 5000;

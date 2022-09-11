@@ -1,31 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
-function Card() {
-  const navigate = useNavigate();
+import { getOneProduct } from "../action/ProductAction";
+
+function Card(
+  {
+    id,
+    author,
+    bookname,
+    countInStock,
+    createdAt,
+    description,
+    image,
+    price,
+
+  }
   
-  const handleDetails = () => {
+) {
+  const navigate = useNavigate();
+
+  const handleDetails =async () => {
+    navigate(`/details/${id}`)
+  };
+
+  const handlePurchase = () => {
     navigate('/purchase')
   };
 
   return (
     <div className="bg-slate-900  mx-auto max-w-sm rounded-xl overflow-hidden  ">
-     <div className="cursor-pointer"  onClick={()=> navigate('/details')}  >
-      <img
-        className="w-full h-[250px]"
-        src="https://godofsmallthing.com/myfiles/2020/08/The-Man-who-Saw-Everything-Fiction-Book-1334x2048.jpg"
-        alt="Sunset in the mountains"
-      />
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
-        <p className="text-gray-700 text-base">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
-          quia, nulla! Maiores et perferendis eaque, exercitationem praesentium
-          nihil.
-        </p>
+      <div className="cursor-pointer" onClick={handleDetails}>
+        <img
+          className="w-[300px] h-[250px]"
+          src={image}
+          alt="Sunset in the mountains"
+        />
+        <div className="px-6 py-4">
+          <div className="font-poppins font-medium capitalize  text-white text-xl mb-2">{bookname}</div>
+          <p className="text-dimWhite font-poppins  text-base capitalize ">
+            {`Author : ${author}`}
+          </p>
+          <p className="text-dimWhite font-poppins  text-base capitalize ">
+            {description}
+          </p>
+          <p className="text-dimWhite font-poppins  text-base  ">
+            {`Price : ${price}/day`}
+          </p>
+        </div>
       </div>
-      </div>
-      <Button action={handleDetails} />
+      <Button action={handlePurchase} />
     </div>
   );
 }

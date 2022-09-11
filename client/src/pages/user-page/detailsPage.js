@@ -1,10 +1,12 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import Details from "../../components/Details";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import styles from "../../styles";
 
-function detailsPage() {
+function DetailsPage() {
+  
   return (
     <>
     <div className="bg-primary w-full overflow-hidden  ">
@@ -25,4 +27,4 @@ function detailsPage() {
   );
 }
 
-export default detailsPage;
+export default DetailsPage;

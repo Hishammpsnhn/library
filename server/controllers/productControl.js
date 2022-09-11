@@ -1,7 +1,7 @@
+const { default: mongoose } = require('mongoose');
 const productModel = require('../models/productModal')
 
-const addProduct = async (req, res) => { 
-    console.log(req.body)
+const addProduct = async (req, res) => {
     const { bookname, author, description, image, launch, price, catagory } = req.body;
     // if (!author || !bookname || !description || !image || !launch || !price || !catagory) {
     //     throw new Error ('all inputs not found')
@@ -31,7 +31,17 @@ const getProduct = async (req, res) => {
     }
 
 }
-
+const OneProduct = async (req, res) => {
+  
+    const { id } = req.params;
+    try {
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post in this id');
+        const book = await productModel.findById(id)
+        res.status(200).json(book)
+    } catch (error) {
+        console.log(error)
+    }
+}
 const updateProduct = async (req, res) => {
     const {
         bookname,
@@ -66,9 +76,9 @@ const updateProduct = async (req, res) => {
         res.json(updatedProduct)
     } else {
         res.status(404)
-        throw new Error ('product not found')
+        throw new Error('product not found')
     }
 }
 
 
-module.exports = { getProduct, addProduct, updateProduct }
+module.exports = { getProduct, addProduct, updateProduct, OneProduct }

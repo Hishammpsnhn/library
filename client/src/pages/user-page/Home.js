@@ -7,7 +7,7 @@ import styles from "../../styles";
 import { useDispatch } from "react-redux";
 import { getBooks, getBooksAsync } from '../../feature/counter/BooksSlice'
 
-function Home() {
+function Home({handleDetails}) {
   
   const dispatch = useDispatch();
   const effectRan = useRef(false)
@@ -28,7 +28,7 @@ function Home() {
           </div>
         </div>
         <div className="bg-gradient-to-r from-black via-slate-800 to-black ">
-          <Hero />
+          <Hero  />
         </div>
         <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
           <Footer />

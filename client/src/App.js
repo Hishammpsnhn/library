@@ -6,7 +6,7 @@ import Details from "./components/Details";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Hero from "./components/Hero";
-import DetailsPage from "./pages/user-page/detailsPage";
+import DetailsPage from "./pages/user-page/DetailsPage";
 import Home from "./pages/user-page/Home";
 import styles from "./styles";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -16,8 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from "react";
 
 function App() {
-  const count = useSelector((state) => state.counter.books)
-  console.log(count)
+
 
 
   return (
@@ -28,7 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/admin" element={<AdminHero />} />
-          <Route path="/details" element={<DetailsPage />} />
+          <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/purchase" element={<PurchasePage />} />
         </Routes>
       </BrowserRouter>

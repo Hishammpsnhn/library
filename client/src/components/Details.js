@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { getOneProduct } from "../action/ProductAction";
+import { getProduct } from "../api";
 import styles from "../styles";
 import Button from "./Button";
 import Rating from "./Rating";
 
-function Details({setModal}) {
+function Details({ setModal }) {
+  const { id } = useParams();
 
-  const handleClose =()=>{
+  const [book, setBook] = useState('')
+
+  useEffect(() => {
+    getOneProduct(id).then((product) => {
+      console.log(product)
+      setBook(product);
+    })
+  },[id])
+
+  const handleClose = () => {
     setModal((prev) => !prev)
   }
 
@@ -15,18 +29,16 @@ function Details({setModal}) {
         <div className="md:flex  ">
           <img
             className=" h-[350px] pr-0 sm:pr-5 flex mx-auto"
-            src="https://godofsmallthing.com/myfiles/2020/08/The-Man-who-Saw-Everything-Fiction-Book-1334x2048.jpg"
+            src={book.image}
             alt="imageUnavailable"
           />
           <div className="flex flex-col pl-2  sm:items-start">
-            <h2 className="text-white text-[30px] font-medium font-poppins md:text-[50px]">Book Name</h2>
+            <h2 className="text-white text-[30px] font-medium font-poppins md:text-[50px]">{book.bookname}</h2>
             <p className={`${styles.paragraph} sm:text-start `}>
-              Lorem ipsum dolor sit amet, consectetur adip Lorem ipsum dolor sit
-              amet, consectetur adip Lorem ipsum dolor sit amet, consectetur
-              adip
+              {book.description}
             </p>
-            <Rating />
-    
+            <Rating rating={book.rating} />
+
           </div>
         </div>
       </div>

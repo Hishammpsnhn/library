@@ -11,7 +11,7 @@ function Button({ action,setModal,text,style }) {
         w-full m-2 md:m-4 p-2 ${style}` }
          onClick={action}
       >
-        {text ? `${text}`:"BUY"}
+        {text ? `${text}`:"RENT"}
       </button>
       
     </div>

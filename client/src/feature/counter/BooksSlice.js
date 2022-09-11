@@ -9,8 +9,7 @@ export const counterSlice = createSlice({
   initialState,
   reducers: {
     addBooks: (state, action) => {
-    console.log(action.payload)
-      state.books=[...state.books,action.payload]
+      state.books = action.payload
     }
   },
 })

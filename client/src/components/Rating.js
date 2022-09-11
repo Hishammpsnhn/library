@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import StarRatingComponent from "react-star-rating-component";
 
-function Rating() {
-    const [rating,setRating] = useState(10)
+function Rating({rating}) {
   return (
     <>
       <div className="start-rating">
@@ -11,7 +10,7 @@ function Rating() {
           name="rate2"
           editing={false}
           starCount={5}
-          value={3}
+          value={rating}
         />
       </div>
     </>
