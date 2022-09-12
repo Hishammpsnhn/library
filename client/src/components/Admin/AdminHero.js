@@ -1,16 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../action/ProductAction";
 import styles from "../../styles";
 import Button from "../Button";
 import Footer from "../Footer";
 import Form from "./Form";
-import Modal from "./Modal";
+
 
 function AdminHero() {
-  const [modal, setModal] = useState(false);
+  const dispatch = useDispatch();
+  const effectRan = useRef(false)
+  
+  const Books = useSelector((state) => state.products.books)
+  
+  const [isEdit, setIsEdit] = useState(false);
+  const [currentId, setCurrentId] = useState(null)
   const [form, setForm] = useState(false);
+
+  useEffect(() => {
+    if (effectRan.current === false) {
+      dispatch(getProduct)
+    }
+    effectRan.current = true
+  }, [])
+
   const handleAddForm = () => {
+    setCurrentId(null)
+    setIsEdit(false)
     setForm((prev) => !prev);
   };
+
+  const handleEdit = (id) => {
+    setIsEdit(true)
+    setCurrentId(id)
+    setForm((prev) => !prev);
+
+  }
+
   return (
     <>
       <div className="">
@@ -18,8 +44,8 @@ function AdminHero() {
           <h2 className=" text-[50px] p-2 ss:text-[70px] text-center font-medium font-poppins">
             Admin Page
           </h2>
-          <div className="flex flex-col  ">
-            <div className="flex justify-end w-full ">
+          <div className={`flex flex-col  shrink ${styles.boxWidth} mx-auto`}>
+            <div className={`flex justify-end w-full`}>
               <Button action={handleAddForm} text="Add Product" />
             </div>
             <div className="flex flex-col">
@@ -39,19 +65,19 @@ function AdminHero() {
                             scope="col"
                             className="text-sm font-medium text-white px-6 py-4"
                           >
-                            First
+                            Image
                           </th>
                           <th
                             scope="col"
                             className="text-sm font-medium text-white px-6 py-4"
                           >
-                            Last
+                            Name
                           </th>
                           <th
                             scope="col"
                             className="text-sm font-medium text-white px-6 py-4"
                           >
-                            Handle
+                            Author
                           </th>
                           <th
                             scope="col"
@@ -62,29 +88,33 @@ function AdminHero() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="bg-white border-b">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            1
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Mark
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Mark
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Otto
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            <button
-                              type="button"
-                              className="bg-slate-700  hover:opacity-80 w-20 p-2 rounded-md text-white"
-                              onClick={() => setModal((prev) => !prev)}
-                            >
-                              EDIT
-                            </button>
-                          </td>
-                        </tr>
+                        {
+                          Books.map((item, i) => (
+                            <tr className="bg-white border-b">
+                              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                {i + 1}
+                              </td>
+                              <td className="text-sm items-center flex justify-center text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                <img className='w-[6vw] h-[6vh]' src={item.image} alt="an image" />
+                              </td>
+                              <td className="text-sm capitalize text-gray-900 font-poppins font-light px-6 py-4 whitespace-nowrap">
+                                {item.bookname}
+                              </td>
+                              <td className="text-sm text-gray-900 font-poppins capitalize font-light px-6 py-4 whitespace-nowrap">
+                                {item.author}
+                              </td>
+                              <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                <button
+                                  type="button"
+                                  className="bg-slate-700  hover:opacity-80 w-20 p-2 rounded-md text-white"
+                                  onClick={() => handleEdit(item._id)}
+                                >
+                                  EDIT
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        }
                       </tbody>
                     </table>
                   </div>
@@ -95,12 +125,9 @@ function AdminHero() {
           </div>
         </div>
       </div>
-      <div className={`${modal ? "flex" : "hidden"}  `}>
-        <Modal setModal={setModal} />
-      </div>
       <div className={`${form ? "flex" : "hidden"}  `}>
         <div className="bg-white absolute top-[150px] left-0 right-0 ml-auto mr-auto w-[90%] sm:w-[60%]  ">
-          <Form setForm={setForm} />
+          <Form isEdit={isEdit} setForm={setForm} currentId={currentId} />
         </div>
       </div>
     </>

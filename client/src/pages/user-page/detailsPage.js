@@ -7,6 +7,7 @@ import styles from "../../styles";
 
 function DetailsPage() {
   
+  
   return (
     <>
     <div className="bg-primary w-full overflow-hidden  ">

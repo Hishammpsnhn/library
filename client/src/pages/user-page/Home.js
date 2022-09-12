@@ -5,9 +5,8 @@ import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import styles from "../../styles";
 import { useDispatch } from "react-redux";
-import { getBooks, getBooksAsync } from '../../feature/counter/BooksSlice'
 
-function Home({handleDetails}) {
+function Home() {
   
   const dispatch = useDispatch();
   const effectRan = useRef(false)

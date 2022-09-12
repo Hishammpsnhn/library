@@ -1,7 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { addAddress } from '../../api'
 import Button from '../Button'
 
-function DelivaryDetails({setStepper}) {
+function DelivaryDetails({ setStepper, setDelivaryDetails }) {
+
+    const initialState = { address: '', city: '', pincode: '', phoneno: '' }
+    const [data, setData] = useState(initialState)
+
+    const handleSubmit = () => {
+        setStepper(1)
+        if (!data.address || !data.city || !data.phoneno || !data.pincode) {
+            alert('Please enter all feilds');
+            return;
+        }
+        addAddress(data).then((res) => {
+            setDelivaryDetails(res)
+        })
+    }
+
+
+    const handleMaxPin = (e, num) => {
+        setData({ ...data, pincode: e.target.value })
+
+        if (e.target.value.length >= num) {
+            const max = e.target.value.slice(0, 6)
+            setData({ ...data, pincode: max })
+        }
+    }
+    const handleMaxPhone = (e, num) => {
+        setData({ ...data, phoneno: e.target.value })
+
+        if (e.target.value.length >= num) {
+            const max = e.target.value.slice(0, 10)
+            setData({ ...data, phoneno: max })
+        }
+    }
+
     return (
         <div className="w-full ">
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
@@ -21,11 +55,10 @@ function DelivaryDetails({setStepper}) {
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="username"
                             type="text"
-                            // onChange={(e) =>
-                            //     setAddProduct({ ...addProduct, bookName: e.target.value })
-                            // }
+                            onChange={(e) =>
+                                setData({ ...data, address: e.target.value })
+                            }
                             placeholder="address"
                         />
                     </div>
@@ -40,9 +73,9 @@ function DelivaryDetails({setStepper}) {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             id="username"
                             type="text"
-                            // onChange={(e) =>
-                            //     setAddProduct({ ...addProduct, bookName: e.target.value })
-                            // }
+                            onChange={(e) =>
+                                setData({ ...data, city: e.target.value })
+                            }
                             placeholder="city"
                         />
                     </div>
@@ -55,11 +88,11 @@ function DelivaryDetails({setStepper}) {
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="username"
-                            type="text"
-                            // onChange={(e) =>
-                            //     setAddProduct({ ...addProduct, bookName: e.target.value })
-                            // }
+                            type="number"
+                            value={data.pincode}
+                            onChange={(e) =>
+                                handleMaxPin(e, 6)
+                            }
                             placeholder="pincode"
                         />
                     </div>
@@ -72,20 +105,20 @@ function DelivaryDetails({setStepper}) {
                         </label>
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                            id="username"
-                            type="text"
-                            // onChange={(e) =>
-                            //     setAddProduct({ ...addProduct, bookName: e.target.value })
-                            // }
+                            type="number"
+                            value={data.phoneno}
+                            onChange={(e) =>
+                                handleMaxPhone(e, 10)
+                            }
                             placeholder="phone number"
                         />
                     </div>
                 </div>
                 <div className="flex items-center justify-center flex-row w-full">
                     <div className="w-[30%]">
-                        <Button action={()=> setStepper(1)} text="SAVE" />
+                        <Button action={handleSubmit} text="SAVE" />
                     </div>
-                    
+
                 </div>
             </form>
         </div>

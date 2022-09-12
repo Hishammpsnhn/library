@@ -1,4 +1,3 @@
-import axios from 'axios';
 import * as api from '../api'
 import { addBooks } from '../feature/counter/BooksSlice';
 
@@ -28,3 +27,4 @@ export const getOneProduct = async (id) => {
         resolve(data)
     })
   }
+

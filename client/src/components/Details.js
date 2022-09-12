@@ -11,7 +11,7 @@ function Details({ setModal }) {
   const { id } = useParams();
 
   const [book, setBook] = useState('')
-
+  console.log(book)
   useEffect(() => {
     getOneProduct(id).then((product) => {
       console.log(product)
@@ -24,21 +24,21 @@ function Details({ setModal }) {
   }
 
   return (
-    <section className={`${styles.flexCenter} w-full `}>
+    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto `}>
       <div className="border   border-blue-300 justify-between w-full sm:flex-row p-2">
         <div className="md:flex  ">
           <img
-            className=" h-[350px] pr-0 sm:pr-5 flex mx-auto"
+            className=" h-[350px]  pr-0 sm:pr-5 flex mx-auto md:mx-0"
             src={book.image}
             alt="imageUnavailable"
           />
           <div className="flex flex-col pl-2  sm:items-start">
-            <h2 className="text-white text-[30px] font-medium font-poppins md:text-[50px]">{book.bookname}</h2>
-            <p className={`${styles.paragraph} sm:text-start `}>
+            <h2 className="text-white text-[30px] font-medium capitalize font-poppins md:text-[50px]">{book.bookname}</h2>
+            <p className={`${styles.paragraph} sm:text-start capitalize italic `}>
               {book.description}
             </p>
             <Rating rating={book.rating} />
-
+            <p className="text-white font-poppins font-thin text-2xl " >{`$ ${book.price}`}</p>
           </div>
         </div>
       </div>

@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import FileBase64 from 'react-file-base64'
-import { addProductActions} from "../../action/ProductAction";
+import { addProductActions } from "../../action/ProductAction";
+import { useSelector } from "react-redux";
 
 
-function Form({ setForm }) {
-  const initialState = { bookname: "", author: "", description: "", catagory: "", price: '', launch: '', image: "" };
+function Form({ setForm, isEdit, currentId }) {
+
+  const Books = useSelector((state) => (currentId ? state.products.books.find((res) => res._id === currentId) : null));
+  
+  useEffect(() => {
+    if (Books) setAddProduct(Books)
+  }, [Books])
+
+
+  const initialState = { bookname: "", author: "", description: "", catagory: "", price: '', launch: '', image: "", discount: '' };
   const [addProduct, setAddProduct] = useState(initialState);
 
 
   const handleClose = () => {
     setForm((prev) => !prev);
+    setAddProduct(initialState)
   };
 
   const handleAddProduct = () => {
     console.log(addProduct)
     addProductActions(addProduct);
   }
+  
   return (
     <div className="w-full ">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
+        <h2 className="text-center font-semibold  text-2xl pb-2 "  >{`${isEdit ? 'Edit Page' : 'Add page '}`}</h2>
         <div className="md:flex md:justify-between flex-row w-full">
           <div className="mb-4 md:w-[48%] ">
             <label
@@ -32,6 +44,7 @@ function Form({ setForm }) {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
               type="text"
+              value={addProduct.bookname}
               onChange={(e) =>
                 setAddProduct({ ...addProduct, bookname: e.target.value })
               }
@@ -48,6 +61,7 @@ function Form({ setForm }) {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="username"
+              value={addProduct.author}
               type="text"
               placeholder="Author"
               onChange={(e) =>
@@ -67,6 +81,7 @@ function Form({ setForm }) {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
+            value={addProduct.description}
             placeholder="Description"
             onChange={(e) =>
               setAddProduct({ ...addProduct, description: e.target.value })
@@ -84,6 +99,7 @@ function Form({ setForm }) {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="number"
+            value={addProduct.launch}
             placeholder="published year"
             onChange={(e) =>
               setAddProduct({ ...addProduct, launch: e.target.value })
@@ -101,6 +117,7 @@ function Form({ setForm }) {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="text"
+            value={addProduct.price}
             placeholder="price"
             onChange={(e) =>
               setAddProduct({ ...addProduct, price: e.target.value })
@@ -118,6 +135,7 @@ function Form({ setForm }) {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             id="username"
             type="number"
+            value={addProduct.discount}
             placeholder="Discount in percentage"
             onChange={(e) =>
               setAddProduct({ ...addProduct, discount: e.target.value })
@@ -137,7 +155,7 @@ function Form({ setForm }) {
               onChange={(e) =>
                 setAddProduct({ ...addProduct, catagory: e.target.value })
               }
-            // value={addProduct.catagory}
+              value={addProduct.catagory}
 
             >
               <option value='' >Pick a choice!</option>
@@ -168,7 +186,7 @@ function Form({ setForm }) {
           <FileBase64
             type='file'
             multiple={false}
-            onDone={({ base64 }) => setAddProduct({ ...addProduct, image:base64 })
+            onDone={({ base64 }) => setAddProduct({ ...addProduct, image: base64 })
             }
           />
         </div>
@@ -178,7 +196,7 @@ function Form({ setForm }) {
             <Button action={handleClose} text="CLOSE" />
           </div>
           <div className="w-[50%]  ">
-            <Button text="ADD PRODUCT" action={handleAddProduct} />
+            <Button text={`${isEdit ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={handleAddProduct} />
           </div>
         </div>
       </form>
