@@ -1,29 +1,46 @@
-const LocalStrategy = require('passport-local').Strategy
-const bcrypt = require('bcrypt')
+const passport = require('passport')
+const { Strategy } = require('passport-local');
+const userModel = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
-function initialize(passport, getUserByEmail, getUserById) {
-  const authenticateUser = async (email, password, done) => {
-    const user = getUserByEmail(email)
-    if (user == null) {
-      return done(null, false, { message: 'No user with that email' })
-    }
 
-    try {
-      if (await bcrypt.compare(password, user.password)) {
-        return done(null, user)
-      } else {
-        return done(null, false, { message: 'Password incorrect' })
+passport.use(
+  new Strategy(
+    {
+      usernameField: 'email',
+
+    },
+    async (email, password, done) => {
+      console.log(email, password)
+      try {
+        if (!email || !password) throw new Error('not get credentials')
+        const existingUser = await userModel.findOne({ email });
+        if (!existingUser) throw new Error("user doesn't existed");
+        const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
+        if (!isPasswordCorrect)  throw new Error("incorrect password")
+        if (isPasswordCorrect) {
+          console.log("auth success")
+          done(null, existingUser)
+        } else {
+          console.log("failed to authenticate")
+          done(null, null);
+        }
+      } catch (error) {
+        console.log(error)
       }
-    } catch (e) {
-      return done(e)
     }
-  }
+  )
+)
 
-  passport.use(new LocalStrategy({ usernameField: 'email' }, authenticateUser))
-  passport.serializeUser((user, done) => done(null, user.id))
-  passport.deserializeUser((id, done) => {
-    return done(null, getUserById(id))
-  })
-}
+passport.serializeUser(function (user, done) {
+  console.log("Called serializeUser");
+  done(null, user.id);
+});
 
-module.exports = initialize
+passport.deserializeUser(function (id, done) {
+  console.log("Called deserializeUser");
+  userModel.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
+

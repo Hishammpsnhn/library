@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { addBooks } from '../feature/counter/BooksSlice';
+import { addBooks } from '../feature/BooksSlice';
 
 export const getProduct = async (dispatch) => {
     try {

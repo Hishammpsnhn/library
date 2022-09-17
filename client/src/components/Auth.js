@@ -1,20 +1,34 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
+import { loginUser, registerUser } from "../action/auth";
 import Button from "./Button";
 import Input from "./Input";
 import IntegrateButton from "./IntegrateButton";
 
 const initialState = { username: "", password: "", email: "", phone: "" };
+
 function Auth() {
+
+  const [userData, setuserData] = useState(initialState);
+  const [signUP, setSignUP] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handlechange = (e) => {
     setuserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  //handlesubmit for Login or Register
   const handleSubmit = (e) => {
-    console.log(userData);
+    e.preventDefault();
+    if (signUP) {
+      dispatch(registerUser(userData));
+    } else {
+      dispatch(loginUser(userData));
+    }
   };
-
-  const [userData, setuserData] = useState(initialState);
-  const [signUP, setSignUP] = useState(false);
+  
   return (
     <div className="bg-slate-800 h-[100vh] flex justify-center items-center ">
       <div className="  md:w-[40%]  shadow-md bg-white rounded-md  p-5 flex flex-col items-center ">
@@ -24,10 +38,10 @@ function Auth() {
               {signUP ? "Sign Up" : "Login"}
             </h2>
             <form className="md:flex md:justify-between flex-col w-full">
-              {signUP && <Input text="username" type="text"  handlechange={handlechange} name="username" />}
-              {signUP && <Input text="phone no" type="number"  handlechange={handlechange} name="phone" />}
+              {signUP && <Input text="username" type="text" handlechange={handlechange} name="username" />}
+              {signUP && <Input text="phone no" type="number" handlechange={handlechange} name="phone" />}
               <Input text="Email" type="email" handlechange={handlechange} name="email" />
-              <Input text="password" type="password"  handlechange={handlechange} name="password" />
+              <Input text="password" type="password" handlechange={handlechange} name="password" />
               <Button
                 text={`${signUP ? "Sign Up" : "Login"}`}
                 action={handleSubmit}

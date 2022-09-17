@@ -1,39 +1,70 @@
 const express = require("express");
-const app = express();
 const dotenv = require("dotenv");
 const http = require("http");
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
 const userRoutes = require("./Routes/userRoutes");
-const productRoutes = require("./Routes/productRoutes");   
+const productRoutes = require("./Routes/productRoutes");
+const session = require("express-session");
+const passport = require("passport");
+const cookieParser = require("cookie-parser");
+const flash = require('connect-flash');
 
-// Telling our Node app to include all these modules
-// const session = require("express-session");
-// const passport = require("passport");
-// const passportLocalMongoose = require("passport-local-mongoose");
-// const Users = require("./models/userModel");
-// const { application } = require("express");
-// const flash = require("express-flash");
-
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
-dotenv.config();
-app.use(express.json()); //accept json data
-
-app.get("/", (req, res) => {
-  res.send("Liberary app server started");
-});
+dotenv.config()
+const app = express();
+//accept json data
+app.use(express.json()); 
 
 
-app.use("/api/product",productRoutes)
+// Passport Config
+require('./config/passportConfig');
 
-const port = process.env.PORT || 5000;
+
+// Express body parser
+app.use(express.urlencoded({ extended: true }));
+
+// Express session
+app.use(
+  session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req,res,next) => {
+  console.log(req.session)
+  console.log(req.user)
+  next();
+})
+
+// Connect flash
+app.use(flash());
+
+// Global variables
+// app.use(function(req, res, next) {
+//   res.locals.success_msg = req.flash('success_msg');
+//   res.locals.error_msg = req.flash('error_msg');
+//   res.locals.error = req.flash('error');
+//   next();
+// });
+
+// Routes
+app.use('/api/product', require('./Routes/productRoutes'));
+app.use('/api/auth', require('./Routes/userRoutes'));
+
+const PORT = process.env.PORT || 5000;
+
 mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     UseUnifiedTopology: true,
   })
   .then(() =>
-    app.listen(port, () => console.log(`server runnig on port : ${port}`))
+    app.listen(PORT, () => console.log(`server runnig on PORT : ${PORT}`))
   )
   .catch((err) => console.log(err.message));

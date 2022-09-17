@@ -2,17 +2,12 @@ const passport = require("passport");
 const Users = require("../models/userModel");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
-const initializePassport = require("../config/passportConfig");
 
-initializePassport(passport, (email) => {
-  Users.find((user) => user.email === email);
-});
 
 const registerUser = async (req, res) => {
-  console.log(req.body);
 
-  const { name, email, password, phone } = req.body;
-  if (!name || !email || !password || !phone) {
+  const { username, email, password, phone } = req.body;
+  if (!username || !email || !password || !phone) {
     res.status(400);
     throw new Error("Please Enter all the feilds");
   }
@@ -22,7 +17,7 @@ const registerUser = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await Users.create({
-    name,
+    name: username,
     phone,
     email,
     password: hashedPassword,
@@ -40,9 +35,13 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = passport.authenticate('local',{
-  successMessage: 'User created successfully',
-  failureMessage: 'User creation failed',
-  failureFlash: true
-})
-module.exports = { registerUser, loginUser };
+const loginUser = (req,res)=>{
+  try {
+    res.status(200).json(req.user)
+  } catch (error) {
+   console.log(error); 
+  }
+}
+
+
+module.exports = { registerUser,loginUser };
