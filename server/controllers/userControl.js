@@ -3,6 +3,20 @@ const Users = require("../models/userModel");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
+const CheckLoginUser = async (req, res, next) => {
+  try {
+    if(req.user){
+      res.status(200).json(req.user)
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(201).json(
+      {
+        message:"authentication failed"
+      }
+    )
+  }
+}
 
 const registerUser = async (req, res) => {
 
@@ -35,13 +49,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = (req,res)=>{
-  try {
-    res.status(200).json(req.user)
-  } catch (error) {
-   console.log(error); 
-  }
-}
 
 
-module.exports = { registerUser,loginUser };
+
+module.exports = { registerUser,CheckLoginUser };

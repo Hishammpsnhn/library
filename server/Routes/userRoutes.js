@@ -1,21 +1,39 @@
 const express = require('express');
 const passport = require('passport');
-const { registerUser, loginUser } = require("../controllers/userControl")
+const { registerUser, CheckLoginUser } = require("../controllers/userControl")
 
 const router = express.Router();
-
-//passport Login 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/api/auth/logined',
-  failureRedirect: '/api/auth/login',
-  failureFlash: true
-}))
 
 //register User
 router.route("/register").post(registerUser)
 
-//login user
-router.get("/logined", loginUser)
+//check user is alredy loggedin or not
+router.route("/").get(CheckLoginUser)
+
+//passport Login 
+router.post('/login', passport.authenticate('local', {
+  successRedirect: 'http://localhost:3000/',
+  failureRedirect: '/api/auth/login',
+  failureFlash: true
+}))
+
+router.get('/login/failed', (req, res) => {
+  res.status(404).json({ message: "login by gooogle failed" });
+})
+
+router.get('/login/sucess', (req, res) => {
+  if (req.user) {
+    res.status(200).json({ message: "login by gooogle sucess" });
+  }
+})
+
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile','email'] }));
 
 
-module.exports = router;
+router.get('/google/callback', passport.authenticate('google', {
+  successRedirect: 'http://localhost:3000/purchase',
+  failureRedirect: '/login/failed',
+}))
+
+  module.exports = router;

@@ -3,17 +3,16 @@ const dotenv = require("dotenv");
 const http = require("http");
 const bodyParser = require('body-parser')
 const mongoose = require("mongoose");
-const userRoutes = require("./Routes/userRoutes");
-const productRoutes = require("./Routes/productRoutes");
 const session = require("express-session");
 const passport = require("passport");
-const cookieParser = require("cookie-parser");
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
+
 
 dotenv.config()
 const app = express();
 //accept json data
-app.use(express.json()); 
+app.use(express.json());
 
 
 // Passport Config
@@ -27,8 +26,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
     secret: 'secret',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.CONNECTION_URL,
+      collectionName: 'session'
+    }),
+    cookie:{
+      maxAge: 1000 *60 * 60 * 60 * 24 
+    }
   })
 );
 
@@ -36,9 +42,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req,res,next) => {
+app.use((req, res, next) => {
   console.log(req.session)
-  console.log(req.user)
+  console.log("req.user", req.user)
   next();
 })
 

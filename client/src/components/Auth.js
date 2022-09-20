@@ -28,6 +28,10 @@ function Auth() {
       dispatch(loginUser(userData));
     }
   };
+
+ const handleApiLogin= ()=>{
+  window.open("http://localhost:5000/api/auth/google","_self")
+  }
   
   return (
     <div className="bg-slate-800 h-[100vh] flex justify-center items-center ">
@@ -52,7 +56,7 @@ function Auth() {
               <span>or</span>
               <hr className="w-[44%] h-[2px]  bg-gray-300" />
             </div>
-            <IntegrateButton />
+            <IntegrateButton action={handleApiLogin} />
             <a>
               Don't have an account?
               <span

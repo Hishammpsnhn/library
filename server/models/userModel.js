@@ -3,9 +3,11 @@ const passportLocalMongoose = require("passport-local-mongoose");
 const userModel = mongoose.Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String},
     password: { type: String},
-    phone: { type: String, required: true, unique: true },
+    phone: { type: String,  unique: true },
+    pic: { type: String, },
+    googleId: {type:Number,unique: true},
   },
   {
     timestamps: true,

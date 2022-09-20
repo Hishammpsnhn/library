@@ -14,14 +14,22 @@ import Auth from "./components/Auth";
 import PurchasePage from "./pages/user-page/PurchasePage";
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from "react";
+import { CheckLoginUser } from "./action/auth";
 
 function App() {
   const userIsLogin = useSelector((state) => state.user.user)
-  const [user,setUser] = useState(null);
+  console.log(userIsLogin);
+  const [user, setUser] = useState(false);
   // const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
-    setUser(userIsLogin)
+    dispatch(CheckLoginUser())
+  }, [])
+
+  useEffect(() => {
+    if (userIsLogin) setUser(true)
   }, [userIsLogin])
 
   console.log(user)
@@ -31,11 +39,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/"  element={( user===null ? <Navigate replace to="/auth" /> : <Navigate replace to="/home" /> )}  />
-          <Route path="/auth" element={( user===null ? <Auth /> : <Navigate replace to="/home" /> )}  />
+          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/auth" element={user ? <Navigate replace to="/home" /> : <Auth />} />
           <Route path="/admin" element={<AdminHero />} />
           <Route path="/details/:id" element={<DetailsPage />} />
-          <Route path="/purchase" element={<PurchasePage />} />
+          <Route path="/purchase" element={ user ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
         </Routes>
       </BrowserRouter>
     </div>

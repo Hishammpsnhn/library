@@ -12,3 +12,5 @@ export const addAddress = (address) => axios.post('/api/product',address)
 
 export const loginUser = (data) => axios.post('/api/auth/login',data)
 export const registerUser = (data) => axios.post('/api/auth/register',data)
+
+export const CheckLoginUser = ()=> axios.get('/api/auth') 
