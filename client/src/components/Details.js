@@ -1,21 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneProduct } from "../action/ProductAction";
 import { getProduct } from "../api";
+import { isLoading } from "../feature/BooksSlice";
 import styles from "../styles";
 import Button from "./Button";
 import Rating from "./Rating";
 
 function Details({ setModal }) {
+  const Loading = useSelector((state) => state.products.isLoading)
+  const dispatch = useDispatch();
+  
   const { id } = useParams();
-
   const [book, setBook] = useState('')
-  console.log(book)
+
   useEffect(() => {
+    dispatch(isLoading(true))
     getOneProduct(id).then((product) => {
-      console.log(product)
       setBook(product);
+      dispatch(isLoading(false))
     })
   },[id])
 
@@ -23,6 +27,13 @@ function Details({ setModal }) {
     setModal((prev) => !prev)
   }
 
+  if(Loading){
+    return(
+      <div className="text-white">
+        Loading...
+      </div>
+    )
+  }
   return (
     <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto `}>
       <div className="border   border-blue-300 justify-between w-full sm:flex-row p-2">

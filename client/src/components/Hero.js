@@ -1,16 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Card from "./Card";
 
 function Hero() {
-  const Books = useSelector((state) => state.products.books)
+  const { books, isLoading } = useSelector((state) => state.products)
+  const [book, setbook] = useState(books)
+  console.log(book)
+
+  useEffect(() => {
+    setbook(books)
+  }, [books])
 
 
+  if (isLoading) {
+    return (
+      <div className="text-white" >
+        loading...
+      </div>
+    )
+  }
   return (
-    <div className="w-full justify-between
+    <div className="w-full justify-between 
      items-center p-4 md:gap-8 gap-4 first-line: grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3
      lg:grid-cols-4 xl:grid-cols-6" >
-      {Books.map((items, i) => (
+      {book.map((items, i) => (
 
         <Card key={items._id}
           id={items._id}
@@ -21,7 +34,7 @@ function Hero() {
           description={items.description}
           image={items.image}
           price={items.price}
-       
+
         />
       ))}
 

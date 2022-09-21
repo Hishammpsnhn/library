@@ -1,14 +1,15 @@
 import * as api from '../api'
-import { addBooks } from '../feature/BooksSlice';
+import { addBooks, isLoading } from '../feature/BooksSlice';
 
 export const getProduct = async (dispatch) => {
     try {
-        const {data}  = await api.getProduct();
-        console.log(data);
+        dispatch(isLoading(true))
+        const { data } = await api.getProduct();
         dispatch(addBooks(data));
-      } catch (err) {
+        dispatch(isLoading(false))
+    } catch (err) {
         console.log(err)
-      }
+    }
 }
 
 export const addProductActions = async (product) => {
@@ -22,9 +23,9 @@ export const addProductActions = async (product) => {
 }
 
 export const getOneProduct = async (id) => {
-    return new Promise(async(resolve,reject)=>{
-        const { data } = await api.getOneProduct(id)     
+    return new Promise(async (resolve, reject) => {
+        const { data } = await api.getOneProduct(id)
         resolve(data)
     })
-  }
+}
 

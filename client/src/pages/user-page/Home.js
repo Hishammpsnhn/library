@@ -20,7 +20,7 @@ function Home() {
 
   return (
     <>
-      <div className="bg-primary w-full overflow-hidden  ">
+      <div className="bg-primary w-full overflow-hidden">
         <div className={`${styles.flexCenter} ${styles.paddingX}`}>
           <div className={`${styles.boxWidth}`}>
             <Header />

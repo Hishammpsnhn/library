@@ -1,29 +1,44 @@
 import * as api from '../api'
-import {User} from '../feature/UserSlice'
+import { User } from '../feature/UserSlice'
 
 export const CheckLoginUser = () => async (dispatch) => {
     return new Promise(async (resolve, reject) => {
         let { data } = await api.CheckLoginUser()
-        console.log(data)
-         dispatch(User(data));
-         resolve(data)
+        dispatch(User(data));
+        resolve(data)
     })
 
 }
 export const loginUser = (userInfo) => async (dispatch) => {
     return new Promise(async (resolve, reject) => {
         let { data } = await api.loginUser(userInfo)
-        console.log(data)
         dispatch(User(data));
-        // resolve(data)
     })
 
 }
-export const registerUser =(userInfo)=> async (dispatch) => {
+export const registerUser = (userInfo) => async (dispatch) => {
     return new Promise(async (resolve, reject) => {
         let { data } = await api.registerUser(userInfo)
         dispatch(User(data));
-        // resolve(data)
     })
-
 }
+
+
+//email check for send otp 
+export const forgotPasswordEmail = (email) => {
+    return new Promise(async (resolve, reject) => {
+        let { data } = await api.forgotPasswordEmail(email)
+        resolve(data)
+    })
+}
+//email check for send otp 
+export const forgotPasswordOtp = (otp) => {
+    return new Promise(async (resolve, reject) => {
+        let { data } = await api.forgotPasswordOtp(otp)
+        resolve(data)
+    })
+}
+
+
+
+

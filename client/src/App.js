@@ -15,15 +15,14 @@ import PurchasePage from "./pages/user-page/PurchasePage";
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from "react";
 import { CheckLoginUser } from "./action/auth";
+import ForgotPassword from "./pages/user-page/ForgotPassword";
 
 function App() {
   const userIsLogin = useSelector((state) => state.user.user)
-  console.log(userIsLogin);
+
   const [user, setUser] = useState(false);
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
-
-
+  
   useEffect(() => {
     dispatch(CheckLoginUser())
   }, [])
@@ -32,7 +31,6 @@ function App() {
     if (userIsLogin) setUser(true)
   }, [userIsLogin])
 
-  console.log(user)
   return (
     <div className="overflow-hidden ">
 
@@ -44,6 +42,7 @@ function App() {
           <Route path="/admin" element={<AdminHero />} />
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/purchase" element={ user ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
+          <Route path="/forgot-password" element={ <ForgotPassword/> } />
         </Routes>
       </BrowserRouter>
     </div>

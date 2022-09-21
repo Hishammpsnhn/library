@@ -12,6 +12,7 @@ function Auth() {
 
   const [userData, setuserData] = useState(initialState);
   const [signUP, setSignUP] = useState(false);
+  
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function Auth() {
               {signUP && <Input text="phone no" type="number" handlechange={handlechange} name="phone" />}
               <Input text="Email" type="email" handlechange={handlechange} name="email" />
               <Input text="password" type="password" handlechange={handlechange} name="password" />
+              <p className="text-blue-700 text-right mb-2 cursor-pointer font-poppins hover:opacity-40 "  >Forgot Password?</p>
               <Button
                 text={`${signUP ? "Sign Up" : "Login"}`}
                 action={handleSubmit}

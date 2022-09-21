@@ -5,13 +5,9 @@ const bcrypt = require('bcryptjs');
 const Users = require('../models/userModel');
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-
+//local strategy
 passport.use(
-  new Strategy(
-    {
-      usernameField: 'email',
-
-    },
+  new Strategy({ usernameField: 'email', },
     async (email, password, done) => {
       console.log(email, password)
       try {
@@ -35,45 +31,39 @@ passport.use(
 );
 
 
-const GOOGLE_CLIENT_ID = "634418605484-cr32sgnhl2ooup3fv7443t7f228c6d1m.apps.googleusercontent.com"
-const GOOGLE_CLIENT_SECRET = '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'
-
+//google strategy
 passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "/api/auth/google/callback"
 },
-
-   function (accessToken, refreshToken, profile, done) {
-
-    userModel.findOne({ 'googleId': profile.id }, async  (err, user)=> {
+  function (accessToken, refreshToken, profile, done) {
+    userModel.findOne({ 'googleId': profile.id }, async (err, user) => {
       if (err) return done(err);
       if (user) {
-        return done(null,user);
-      }else{
+        return done(null, user);
+      } else {
         const user = await Users.create({
           name: profile._json.name,
           email: profile._json.email,
-          pic:profile._json.picture,
+          pic: profile._json.picture,
           googleId: profile.id
         });
-        return done(null,user);
+        return done(null, user);
       }
     })
   }
-
-
 ));
 
-
+// insert user in session
 passport.serializeUser(function (user, done) {
-  console.log("Called serializeUser");
   console.log(user);
   done(null, user.id);
 });
 
+//fetch user from session
 passport.deserializeUser(function (id, done) {
-  console.log("Called deserializeUser");
   userModel.findById(id, function (err, user) {
     done(err, user);
   });

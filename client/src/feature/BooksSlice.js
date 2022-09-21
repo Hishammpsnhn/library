@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const initialState = {
   books: [],
+  isLoading: true,
 }
 export const counterSlice = createSlice({
   name: 'product',
@@ -10,19 +11,14 @@ export const counterSlice = createSlice({
   reducers: {
     addBooks: (state, action) => {
       state.books = action.payload
+    },
+    isLoading :(state,action)=>{
+      state.isLoading = action.payload
     }
   },
 })
 
-export const getBooksAsync = () => async (dispatch) => {
-  try {
-    const response = await axios.get('/api/product')
 
-    dispatch(addBooks(response.data));
-  } catch (err) {
-    console.log(err)
-  }
-};
 
-export const { addBooks } = counterSlice.actions
+export const { addBooks,isLoading } = counterSlice.actions
 export default counterSlice.reducer
