@@ -27,14 +27,16 @@ export const registerUser = (userInfo) => async (dispatch) => {
 //email check for send otp 
 export const forgotPasswordEmail = (email) => {
     return new Promise(async (resolve, reject) => {
-        let { data } = await api.forgotPasswordEmail(email)
+        console.log(email)
+        let { data } = await api.forgotPasswordEmail({email})
+
         resolve(data)
     })
 }
 //email check for send otp 
 export const forgotPasswordOtp = (otp) => {
     return new Promise(async (resolve, reject) => {
-        let { data } = await api.forgotPasswordOtp(otp)
+        let { data } = await api.forgotPasswordOtp({otp})
         resolve(data)
     })
 }

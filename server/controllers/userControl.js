@@ -2,17 +2,19 @@ const passport = require("passport");
 const Users = require("../models/userModel");
 const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const { Auth } = require('two-step-auth')
 
+let mailmsg
 const CheckLoginUser = async (req, res, next) => {
   try {
-    if(req.user){
+    if (req.user) {
       res.status(200).json(req.user)
     }
   } catch (error) {
     console.log(error)
     res.status(201).json(
       {
-        message:"authentication failed"
+        message: "authentication failed"
       }
     )
   }
@@ -49,7 +51,42 @@ const registerUser = async (req, res) => {
   }
 };
 
+const forgotPasswordEmail = async (req, res) => {
+  const { email } = req.body
+  if (!req.user) {
+    const user = await Users.findOne({ email })
+    if (!user) {
+      res.status(400)
+      throw new Error("user not found")
+    }
+    try {
+      const mail = await Auth(user.email, "Library");
+      mailmsg = mail
+      console.log(mail);
+      console.log(mail.mail);
+      console.log(mail.OTP);
+      console.log(mail.success);
+      res.status(200).json({ message: "successfully otp sended" })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+const forgotPasswordOtp = async (req, res) => {
+  const { otp } = req.body
+  if (mailmsg) {
+    console.log(otp)
+    console.log(mailmsg.OTP)
+    if (mailmsg.OTP == otp) {
+      res.status(200).json({ message:" successfully"})
+    } else {
+      res.status(400)
+      throw new Error("Incorrect otp")
+    }
+
+  }
+}
 
 
-
-module.exports = { registerUser,CheckLoginUser };
+module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp };

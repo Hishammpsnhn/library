@@ -32,7 +32,7 @@ const getProduct = async (req, res) => {
 
 }
 const OneProduct = async (req, res) => {
-  
+
     const { id } = req.params;
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post in this id');
@@ -81,4 +81,17 @@ const updateProduct = async (req, res) => {
 }
 
 
-module.exports = { getProduct, addProduct, updateProduct, OneProduct }
+const editProduct = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
+    try {
+        const updatedPost = await productModel.findByIdAndUpdate(id, req.body, { new: true })
+        res.json(updatedPost)
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct }

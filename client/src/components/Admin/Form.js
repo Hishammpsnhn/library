@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import FileBase64 from 'react-file-base64'
-import { addProductActions } from "../../action/ProductAction";
-import { useSelector } from "react-redux";
+import { addProductActions, editProduct } from "../../action/ProductAction";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function Form({ setForm, isEdit, currentId }) {
 
   const Books = useSelector((state) => (currentId ? state.products.books.find((res) => res._id === currentId) : null));
-  
+  const dispatch = useDispatch();
   useEffect(() => {
     if (Books) setAddProduct(Books)
   }, [Books])
@@ -26,6 +26,13 @@ function Form({ setForm, isEdit, currentId }) {
   const handleAddProduct = () => {
     console.log(addProduct)
     addProductActions(addProduct);
+  }
+  const handleEditProduct = () => {
+    console.log(addProduct)
+    // addProductActions(addProduct);
+     dispatch(editProduct(currentId,addProduct)).then((res)=>{
+      setForm((prev) => !prev);
+     })
   }
   
   return (
@@ -196,7 +203,7 @@ function Form({ setForm, isEdit, currentId }) {
             <Button action={handleClose} text="CLOSE" />
           </div>
           <div className="w-[50%]  ">
-            <Button text={`${isEdit ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={handleAddProduct} />
+            <Button text={`${isEdit ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={isEdit ? handleEditProduct :handleAddProduct} />
           </div>
         </div>
       </form>

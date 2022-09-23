@@ -1,5 +1,5 @@
 import * as api from '../api'
-import { addBooks, isLoading } from '../feature/BooksSlice';
+import { addBooks, editBook, isLoading } from '../feature/BooksSlice';
 
 export const getProduct = async (dispatch) => {
     try {
@@ -29,3 +29,7 @@ export const getOneProduct = async (id) => {
     })
 }
 
+export const editProduct =(id,product) =>async(dispatch)=>{
+        const { data } = await api.editProduct(id,product)
+        dispatch(editBook(data))
+}

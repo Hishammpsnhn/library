@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { registerUser, CheckLoginUser } = require("../controllers/userControl")
+const { registerUser, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp } = require("../controllers/userControl")
 
 const router = express.Router();
 
@@ -37,5 +37,9 @@ router.get('/google/callback', passport.authenticate('google', {
   successRedirect: 'http://localhost:3000/',
   failureRedirect: '/login/failed',
 }))
+
+
+router.post('/forgot-password/email',forgotPasswordEmail)
+router.post('/forgot-password/otp',forgotPasswordOtp)
 
 module.exports = router;

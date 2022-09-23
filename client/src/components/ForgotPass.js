@@ -6,17 +6,19 @@ import Input from './Input'
 
 function ForgotPass() {
 
-  const [verify, setVerify] = useState(true);
-  const [text, setText] = useState('')
+  const [verify, setVerify] = useState(false);
+  const [text, setText] = useState()
 
   const handleSubmit = () => {
     if (verify) {
       forgotPasswordOtp(text).then((res) => {
-        console.log(res)
+       
       })
     } else {
       forgotPasswordEmail(text).then((res) => {
         console.log(res)
+        setText()
+        setVerify(true)
       })
     }
   }
