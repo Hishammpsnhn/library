@@ -32,8 +32,8 @@ function App() {
   }, [userIsLogin])
 
   return (
-    <div className="overflow-hidden ">
-
+    <div className=" ">
+  
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />

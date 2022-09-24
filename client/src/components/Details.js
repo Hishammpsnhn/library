@@ -7,6 +7,7 @@ import { isLoading } from "../feature/BooksSlice";
 import styles from "../styles";
 import Button from "./Button";
 import Rating from "./Rating";
+import Review from "./Review";
 
 function Details({ setModal }) {
   const Loading = useSelector((state) => state.products.isLoading)
@@ -35,11 +36,11 @@ function Details({ setModal }) {
     )
   }
   return (
-    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto `}>
+    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto flex-col`}>
       <div className="border   border-blue-300 justify-between w-full sm:flex-row p-2">
-        <div className="md:flex  ">
+        <div className="sm:flex  ">
           <img
-            className=" h-[350px]  pr-0 sm:pr-5 flex mx-auto md:mx-0"
+            className=" h-[350px]  pr-0 sm:pr-5 flex mx-auto sm:mx-0"
             src={book.image}
             alt="imageUnavailable"
           />
@@ -52,6 +53,7 @@ function Details({ setModal }) {
             <p className="text-white font-poppins font-thin text-2xl " >{`$ ${book.price}`}</p>
           </div>
         </div>
+      <Review/>
       </div>
     </section>
   );

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
 import { getOneProduct } from "../action/ProductAction";
+import Bounce from 'react-reveal/Bounce';
 
 function Card(
   {
@@ -28,7 +29,9 @@ function Card(
   };
 
   return (
+    <Bounce bottom >
     <div className="bg-slate-900  mx-auto max-w-sm rounded-xl overflow-hidden  ">
+
       <div className="cursor-pointer" onClick={handleDetails}>
         <img
           className="w-[300px] h-[250px]"
@@ -50,6 +53,7 @@ function Card(
       </div>
       <Button action={handlePurchase} />
     </div>
+    </Bounce>
   );
 }
 
