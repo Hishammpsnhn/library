@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { registerUser, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp } = require("../controllers/userControl")
+const { registerUser, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp, addAdress } = require("../controllers/userControl")
 
 const router = express.Router();
 
@@ -41,5 +41,8 @@ router.get('/google/callback', passport.authenticate('google', {
 
 router.post('/forgot-password/email',forgotPasswordEmail)
 router.post('/forgot-password/otp',forgotPasswordOtp)
+
+//add address
+router.route('/user-address').post(addAdress)
 
 module.exports = router;

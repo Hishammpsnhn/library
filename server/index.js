@@ -38,15 +38,16 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log(req.session)
-  console.log("req.user", req.user)
-  next();
-})
+// app.use((req, res, next) => {
+//   console.log(req.session)
+//   console.log("req.user", req.user)
+//   next();
+// })
 
 // Routes
 app.use('/api/product', require('./Routes/productRoutes'));
 app.use('/api/auth', require('./Routes/userRoutes'));
+app.use('/api/orders',require('./Routes/orderRoute'));
 
 //server and db setup
 const PORT = process.env.PORT || 5000;

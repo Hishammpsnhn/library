@@ -25,7 +25,7 @@ function Card(
   };
 
   const handlePurchase = () => {
-    navigate('/purchase')
+    navigate(`/purchase/${id}`)
   };
 
   return (

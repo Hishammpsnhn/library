@@ -14,6 +14,8 @@ export const registerUser = (data) => axios.post('/api/auth/register',data)
 export const loginUser = (data) => axios.post('/api/auth/login',data)
 export const forgotPasswordEmail= (data)=> axios.post('/api/auth/forgot-password/email',data)
 export const forgotPasswordOtp= (otp)=> axios.post('/api/auth/forgot-password/otp',otp)
-
 //user address
-export const addAddress = (address) => axios.post('/api/product',address)
+export const addAddress = (address) => axios.post('/api/auth/user-address',address)
+
+//orders
+export const orderItem = (data)=> axios.post(`/api/orders`,data)

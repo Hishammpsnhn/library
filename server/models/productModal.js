@@ -3,7 +3,7 @@ const reviewSchema = require("./review");
 
 const userModel = mongoose.Schema(
   {
-    bookname: { type: String,required: true},
+    bookname: { type: String, required: true },
     image: { type: String, required: true },
     author: { type: String, required: true },
     description: { type: String },
@@ -14,7 +14,8 @@ const userModel = mongoose.Schema(
     countInStock: { type: Number, required: true, default: 0 },
     reviews: [reviewSchema],
     rating: { type: Number, required: true, default: 0, min: 0, },
-    numReviews: { type: Number,required: true, default: 0,},
+    numReviews: { type: Number, required: true, default: 0, },
+    countInStock: { type: Number, required: true, default: 1, },
   },
   {
     timestamps: true,

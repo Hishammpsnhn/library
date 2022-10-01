@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-import { addAddress } from '../../api'
+import { useSelector } from 'react-redux';
+import { addAddress } from '../../action/auth'
 import Button from '../Button'
+const initialState = { address: '', city: '', pincode: '', phoneNo: '' }
 
 function DelivaryDetails({ setStepper, setDelivaryDetails }) {
-
-    const initialState = { address: '', city: '', pincode: '', phoneno: '' }
+    const userIsLogin = useSelector((state) => state.user.user);
     const [data, setData] = useState(initialState)
 
+    if (userIsLogin.addresses.length >= 1) setStepper(1)
+
+
     const handleSubmit = () => {
-        setStepper(1)
-        if (!data.address || !data.city || !data.phoneno || !data.pincode) {
+        if (!data.address || !data.city || !data.phoneNo || !data.pincode) {
             alert('Please enter all feilds');
             return;
         }
+        setStepper(1)
         addAddress(data).then((res) => {
             setDelivaryDetails(res)
         })
@@ -28,11 +32,11 @@ function DelivaryDetails({ setStepper, setDelivaryDetails }) {
         }
     }
     const handleMaxPhone = (e, num) => {
-        setData({ ...data, phoneno: e.target.value })
+        setData({ ...data, phoneNo: e.target.value })
 
         if (e.target.value.length >= num) {
             const max = e.target.value.slice(0, 10)
-            setData({ ...data, phoneno: max })
+            setData({ ...data, phoneNo: max })
         }
     }
 
@@ -106,7 +110,7 @@ function DelivaryDetails({ setStepper, setDelivaryDetails }) {
                         <input
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             type="number"
-                            value={data.phoneno}
+                            value={data.phoneNo}
                             onChange={(e) =>
                                 handleMaxPhone(e, 10)
                             }

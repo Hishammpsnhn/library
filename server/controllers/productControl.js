@@ -1,11 +1,10 @@
 const { default: mongoose } = require('mongoose');
 const productModel = require('../models/productModal')
+const userModel = require('../models/userModel');
 
 const addProduct = async (req, res) => {
     const { bookname, author, description, image, launch, price, catagory } = req.body;
-    // if (!author || !bookname || !description || !image || !launch || !price || !catagory) {
-    //     throw new Error ('all inputs not found')
-    // }
+
     try {
         const products = await productModel.create({
             author,
@@ -94,4 +93,5 @@ const editProduct = async (req, res) => {
 }
 
 
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct }
+
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct}

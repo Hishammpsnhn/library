@@ -6,6 +6,7 @@ import { getProduct } from "../api";
 import { isLoading } from "../feature/BooksSlice";
 import styles from "../styles";
 import Button from "./Button";
+import CardSkeliton from "./CardSkeliton";
 import Rating from "./Rating";
 import Review from "./Review";
 
@@ -30,8 +31,8 @@ function Details({ setModal }) {
 
   if(Loading){
     return(
-      <div className="text-white">
-        Loading...
+      <div className="text-white w-full h-[80vh] ">
+            <CardSkeliton />
       </div>
     )
   }

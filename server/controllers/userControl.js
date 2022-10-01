@@ -21,16 +21,15 @@ const CheckLoginUser = async (req, res, next) => {
 }
 
 const registerUser = async (req, res) => {
-
   const { username, email, password, phone } = req.body;
   if (!username || !email || !password || !phone) {
     res.status(400);
     throw new Error("Please Enter all the feilds");
   }
-
+  
   const existingUser = await userModel.findOne({ email });
   if (existingUser) throw new Error("user already existed");
-
+  
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await Users.create({
     name: username,
@@ -84,9 +83,17 @@ const forgotPasswordOtp = async (req, res) => {
       res.status(400)
       throw new Error("Incorrect otp")
     }
-
+    
   }
+}
+const addAdress = async (req, res) => {
+  console.log(req.body)
+  const user = await userModel.findById(req.user._id)
+  user.addresses.push(req.body)
+  const updatedPost = await user.save()
+  console.log(updatedPost)
 }
 
 
-module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp };
+
+module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp,addAdress };

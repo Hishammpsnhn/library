@@ -37,11 +37,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />
-          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route path="/" element={user?<Navigate replace to="/home" />:<Navigate replace to="/auth" />} />
           <Route path="/auth" element={user ? <Navigate replace to="/home" /> : <Auth />} />
           <Route path="/admin" element={<AdminHero />} />
           <Route path="/details/:id" element={<DetailsPage />} />
-          <Route path="/purchase" element={ user ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
+          <Route path="/purchase/:id" element={ user ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
           <Route path="/forgot-password" element={ <ForgotPassword/> } />
         </Routes>
       </BrowserRouter>

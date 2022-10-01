@@ -1,6 +1,6 @@
 import React from "react";
 
-function Button({ action,setModal,text,style }) {
+function Button({ action,text,style }) {
 
   return (
     <div className="flex justify-end">
