@@ -40,6 +40,7 @@ function Hero({books,isLoading}) {
           description={items.description}
           image={items.image}
           price={items.price}
+       
 
         />
 

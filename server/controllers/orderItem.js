@@ -23,7 +23,7 @@ const addOrderItem = async (req, res) => {
         orderItems.forEach(async (item) => {
             const product = await productModal.findById(item.product)
             if (product.countInStock <= 0) {
-                res.status(400).json({message: "out of stock"})
+                res.status(400).json({ message: "out of stock" })
             } else {
                 product.countInStock -= 1
                 await product.save()
@@ -43,4 +43,13 @@ const addOrderItem = async (req, res) => {
     }
 
 }
-module.exports = { addOrderItem }
+
+// @desc    Get logged in user orders
+// @route   GET /api/orders/myorders
+// @access  Private
+const getMyOrders = async (req, res) => {
+    const orders = await orderModal.find({ user: req.user._id }).sort('-createdAt')
+    res.json(orders)
+}
+
+module.exports = { addOrderItem, getMyOrders }

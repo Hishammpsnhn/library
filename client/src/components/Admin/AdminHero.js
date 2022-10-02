@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../../styles";
 import Button from "../Button";
 import Footer from "../Footer";
+import Table from "../Table";
 import Form from "./Form";
 import Modal from "./Modal";
 
@@ -24,71 +25,7 @@ function AdminHero() {
             </div>
             <div className="flex flex-col">
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-4 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-hidden">
-                    <table className="min-w-full text-center">
-                      <thead className="border-b bg-gray-800">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="text-sm font-medium text-white px-6 py-4"
-                          >
-                            #
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-medium text-white px-6 py-4"
-                          >
-                            First
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-medium text-white px-6 py-4"
-                          >
-                            Last
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-medium text-white px-6 py-4"
-                          >
-                            Handle
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-medium text-white px-6 py-4"
-                          >
-                            Handle
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="bg-white border-b">
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            1
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Mark
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Mark
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            Otto
-                          </td>
-                          <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                            <button
-                              type="button"
-                              className="bg-slate-700  hover:opacity-80 w-20 p-2 rounded-md text-white"
-                              onClick={() => setModal((prev) => !prev)}
-                            >
-                              EDIT
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <Table/>
                 <Footer />
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { loginUser, registerUser } from "../action/auth";
 import Button from "./Button";
@@ -12,7 +12,7 @@ function Auth() {
 
   const [userData, setuserData] = useState(initialState);
   const [signUP, setSignUP] = useState(false);
-  
+  const user = useSelector((state) => state.user.user)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,7 +31,9 @@ function Auth() {
   };
 
  const handleApiLogin= ()=>{
-  window.open("http://localhost:5000/api/auth/google","_self")
+  if(!user){
+    window.open("http://localhost:5000/api/auth/google","_self")
+  }
   }
   
   return (

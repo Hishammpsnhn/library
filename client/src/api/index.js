@@ -18,4 +18,5 @@ export const forgotPasswordOtp= (otp)=> axios.post('/api/auth/forgot-password/ot
 export const addAddress = (address) => axios.post('/api/auth/user-address',address)
 
 //orders
-export const orderItem = (data)=> axios.post(`/api/orders`,data)
+export const addOrderItem = (data)=> axios.post(`/api/orders`,data)
+export const myOrders = ()=> axios.get(`/api/orders/myorders`)
