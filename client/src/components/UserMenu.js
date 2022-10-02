@@ -41,7 +41,7 @@ function UserMenu({ value, setValue }) {
     ]
 
     return (
-        <div className='overflow-y-scroll'>
+        <div className='overflow-hidden'>
             <div className='text-white flex flex-row justify-evenly p-2 bg-black  ' >
                 {data.map((item, i) => (
                     <p key={i} className={`cursor-pointer flex flex-col items-center p-1 rounded-md text-center ${i === value && 'bg-slate-800'} `}

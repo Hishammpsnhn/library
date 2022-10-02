@@ -12,6 +12,7 @@ export const getOneProduct = (id) => axios.get(`/api/product/${id}/getbook`)
 export const CheckLoginUser = ()=> axios.get('/api/auth') 
 export const registerUser = (data) => axios.post('/api/auth/register',data)
 export const loginUser = (data) => axios.post('/api/auth/login',data)
+export const logOutUser = () => axios.get('/api/auth/logout')
 export const forgotPasswordEmail= (data)=> axios.post('/api/auth/forgot-password/email',data)
 export const forgotPasswordOtp= (otp)=> axios.post('/api/auth/forgot-password/otp',otp)
 //user address

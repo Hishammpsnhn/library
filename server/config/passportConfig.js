@@ -9,7 +9,6 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 passport.use(
   new Strategy({ usernameField: 'email', },
     async (email, password, done) => {
-      console.log(email, password)
       try {
         if (!email || !password) throw new Error('not get credentials')
         const existingUser = await userModel.findOne({ email });

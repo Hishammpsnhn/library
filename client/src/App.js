@@ -13,17 +13,14 @@ import ForgotPassword from "./pages/user-page/ForgotPassword";
 
 function App() {
   const userIsLogin = useSelector((state) => state.user.user)
+console.log(userIsLogin)
 
-  const [user, setUser] = useState(false);
   const dispatch = useDispatch();
   
   useEffect(() => {
-    dispatch(CheckLoginUser())
+   dispatch( CheckLoginUser())
   }, [])
 
-  useEffect(() => {
-    if (userIsLogin) setUser(true)
-  }, [userIsLogin])
 
   return (
     <div className=" ">
@@ -32,11 +29,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/auth" element={user ? <Navigate replace to="/home" /> : <Auth />} />
+          <Route path="/auth" element={userIsLogin ? <Navigate replace to="/home" /> : <Auth />} />
           <Route path="/admin" element={<AdminHero />} />
           <Route path="/details/:id" element={<DetailsPage />} />
           
-          <Route path="/purchase/:id" element={ user ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
+          <Route path="/purchase/:id" element={ userIsLogin ? <PurchasePage /> : <Navigate replace to="/auth" />  } />
           <Route path="/forgot-password" element={ <ForgotPassword/> } />
         </Routes>
       </BrowserRouter>

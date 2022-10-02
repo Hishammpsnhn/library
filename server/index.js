@@ -40,11 +40,10 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   console.log(req.session)
-  console.log("req.user", req.user)
   next();
 })
 
-// Routes
+// Routes  
 app.use('/api/product', require('./Routes/productRoutes'));
 app.use('/api/auth', require('./Routes/userRoutes'));
 app.use('/api/orders',require('./Routes/orderRoute'));

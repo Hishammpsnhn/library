@@ -8,7 +8,7 @@ function DelivaryDetails({ setStepper, setDelivaryDetails }) {
     const userIsLogin = useSelector((state) => state.user.user);
     const [data, setData] = useState(initialState)
 
-    if (userIsLogin.addresses.length >= 1) setStepper(1)
+    if (userIsLogin?.addresses?.length > 0) setStepper(1)
 
 
     const handleSubmit = () => {

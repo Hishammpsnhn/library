@@ -23,7 +23,7 @@ router.get('/login/failed', (req, res) => {
   res.status(404).json({ message: "login by gooogle failed" });
 })
 
-//login success
+//login success 
 router.get('/login/sucess', (req, res) => {
   if (req.user) {
     res.status(200).json({ message: "login by gooogle sucess" });
@@ -39,7 +39,10 @@ router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/login/failed',
 }))
 
-
+router.get('/logout',(req,res)=>{
+  console.log("called logut")
+  req.session.destroy()
+})
 router.post('/forgot-password/email',forgotPasswordEmail)
 router.post('/forgot-password/otp',forgotPasswordOtp)
 
