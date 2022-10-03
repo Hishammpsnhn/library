@@ -21,22 +21,25 @@ const CheckLoginUser = async (req, res, next) => {
 }
 
 const registerUser = async (req, res) => {
+  console.log("register callled")
   const { username, email, password, phone } = req.body;
   if (!username || !email || !password || !phone) {
     res.status(400);
     throw new Error("Please Enter all the feilds");
   }
-  
+
   const existingUser = await userModel.findOne({ email });
   if (existingUser) throw new Error("user already existed");
-  
+
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await Users.create({
-    name: username,
-    phone,
-    email,
-    password: hashedPassword,
-  });
+  console.log("helokk")
+
+   const user = await Users.create({
+     name: username,
+     phone,
+     email,
+     password: hashedPassword,
+   });
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -49,6 +52,15 @@ const registerUser = async (req, res) => {
     throw new Error("failed to create user");
   }
 };
+
+const logout = async (req, res) => {
+  req.session.destroy(function (err) {
+    if (err) {
+      throw new Error("failed to destroy user in session");
+    }
+    res.json({ message: "succssully logged out" })
+  })
+}
 
 const forgotPasswordEmail = async (req, res) => {
   const { email } = req.body
@@ -78,12 +90,12 @@ const forgotPasswordOtp = async (req, res) => {
     console.log(otp)
     console.log(mailmsg.OTP)
     if (mailmsg.OTP == otp) {
-      res.status(200).json({ message:" successfully"})
+      res.status(200).json({ message: " successfully" })
     } else {
       res.status(400)
       throw new Error("Incorrect otp")
     }
-    
+
   }
 }
 const addAdress = async (req, res) => {
@@ -96,4 +108,4 @@ const addAdress = async (req, res) => {
 
 
 
-module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp,addAdress };
+module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp, addAdress, logout };

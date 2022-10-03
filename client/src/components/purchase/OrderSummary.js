@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getOneProduct } from '../../action/ProductAction';
 import { isLoading } from '../../feature/BooksSlice';
 import Button from '../Button'
-import CardSkeliton from '../CardSkeliton';
+import CardSkeliton from '../skellitons/CardSkeliton';
 import OrderedProduct from './OrderedProduct';
 
 function OrderSummary({ setStepper,product,setProduct }) {
@@ -33,10 +33,10 @@ function OrderSummary({ setStepper,product,setProduct }) {
         <div className='h-fit w-full' >
             <h2 className='text-white text-xl font-medium pt-5 '>Delivary to:</h2>
             <div className='text-white' >
-                <p>{userIsLogin.addresses}</p>
-                <p>{userIsLogin.city}</p>
-                <p>{userIsLogin.pincode}</p>
-                <p>{userIsLogin.phoneNo}</p>
+                <p>{userIsLogin?.addresses}</p>
+                <p>{userIsLogin?.city}</p>
+                <p>{userIsLogin?.pincode}</p>
+                <p>{userIsLogin?.phoneNo}</p>
             </div>
             <h2 className='text-white text-xl font-medium pt-5 '>Product Details</h2>
             <div className="w-full h-[100%] overflow-hidden" >

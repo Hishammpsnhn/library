@@ -47,7 +47,7 @@ passport.use(new GoogleStrategy({
           name: profile._json.name,
           email: profile._json.email,
           pic: profile._json.picture,
-          googleId: profile.id
+          phone:'not given'
         });
         return done(null, user);
       }
@@ -67,4 +67,3 @@ passport.deserializeUser(function (id, done) {
     done(err, user);
   });
 });
-

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 import Card from "./Card";
-import CardSkeliton from "./CardSkeliton";
+import CardSkeliton from "./skellitons/CardSkeliton";
 
 function Hero({books,isLoading}) {
 

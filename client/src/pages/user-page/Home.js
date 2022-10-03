@@ -10,6 +10,8 @@ import Table from "../../components/Table";
 import { useNavigate } from "react-router-dom";
 import { CheckLoginUser, logout } from "../../action/auth";
 import { User } from "../../feature/UserSlice";
+import MyAccount from "../../components/MyAccount";
+import MyOrders from "../../components/MyOrders";
 
 function Home() {
   const { books, isLoading } = useSelector((state) => state.products)
@@ -24,11 +26,7 @@ const dispatch = useDispatch();
       dispatch(getProduct)
     }
   }, [])
-  const handleLogout = () => {
-    logout()
-    localStorage.clear()
-    dispatch(User(null))
-  }
+
 
   return (
     <>
@@ -41,11 +39,11 @@ const dispatch = useDispatch();
         <div className={` sticky top-0 z-10`}>
           <UserMenu value={value} setValue={setValue} />
         </div>
-        <div className="bg-gradient-to-r from-black via-slate-800 to-black ">
+        <div className="bg-gradient-to-r from-black via-slate-800 to-black  ">
           {value === 0 && <Hero books={books} isLoading={isLoading} />}
           {value === 1 && <div>Notifications</div>}
-          {value === 2 && <div><button onClick={handleLogout}>Logout</button></div>}
-          {value === 3 && <Table myOrdercomponent={true} />}
+          {value === 2 && <MyAccount/>}
+          {value === 3 && <MyOrders/>}
 
 
         </div>

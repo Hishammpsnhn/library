@@ -3,7 +3,8 @@ const productModel = require('../models/productModal')
 const userModel = require('../models/userModel');
 
 const addProduct = async (req, res) => {
-    const { bookname, author, description, image, launch, price, catagory } = req.body;
+    const { bookname, author, description, image, launch, price, catagory,discount } = req.body;
+    
 
     try {
         const products = await productModel.create({
@@ -13,7 +14,8 @@ const addProduct = async (req, res) => {
             description,
             launch,
             price,
-            catagory
+            catagory,
+            discount
         })
         if (products) res.status(201).json(products)
     } catch (error) {

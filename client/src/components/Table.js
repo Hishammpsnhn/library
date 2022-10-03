@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { myOrders } from '../action/orderItem'
+import TableSkeliton from './skellitons/TableSkeliton'
 
-function Table({ myOrdercomponent }) {
-  const [orders, setOrders] = useState([])
-useEffect(() =>{
-  if (myOrdercomponent) {
-    myOrders().then((res) => setOrders(res))
-    console.log(myOrdercomponent)
-  }
-},[])
+function Table({orders}) {
+ 
   return (
     <div className="  py-4 sm:px-6 lg:px-8 overflow-y-scroll">
       <div className="">
@@ -54,6 +49,7 @@ useEffect(() =>{
             </tr>
           </thead>
           {orders.map((item,i) => (
+            <>
             <tbody key={i}>
               <tr className="bg-white border-b">
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
@@ -82,6 +78,8 @@ useEffect(() =>{
                 </td>
               </tr>
             </tbody>
+            
+            </>
           ))}
 
         </table>

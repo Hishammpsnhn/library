@@ -21,10 +21,13 @@ function Auth() {
   };
 
   //handlesubmit for Login or Register
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (signUP) {
-      dispatch(registerUser(userData));
+      dispatch(registerUser(userData)).then(()=>{
+        setSignUP(false)
+      })
     } else {
       dispatch(loginUser(userData));
     }

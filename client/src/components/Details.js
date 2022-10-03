@@ -2,11 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getOneProduct } from "../action/ProductAction";
-import { getProduct } from "../api";
 import { isLoading } from "../feature/BooksSlice";
 import styles from "../styles";
-import Button from "./Button";
-import CardSkeliton from "./CardSkeliton";
+import CardSkeliton from "./skellitons/CardSkeliton";
 import Rating from "./Rating";
 import Review from "./Review";
 

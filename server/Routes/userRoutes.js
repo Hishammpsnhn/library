@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { registerUser, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp, addAdress } = require("../controllers/userControl");
+const { registerUser,logout, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp, addAdress } = require("../controllers/userControl");
 const { protect } = require('../middleware/protect');
 
 const router = express.Router();
@@ -39,10 +39,7 @@ router.get('/google/callback', passport.authenticate('google', {
   failureRedirect: '/login/failed',
 }))
 
-router.get('/logout',(req,res)=>{
-  console.log("called logut")
-  req.session.destroy()
-})
+router.get('/logout',logout)
 router.post('/forgot-password/email',forgotPasswordEmail)
 router.post('/forgot-password/otp',forgotPasswordOtp)
 

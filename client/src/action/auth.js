@@ -18,7 +18,10 @@ export const registerUser = (userInfo) => async (dispatch) => {
 }
 
 export const logout = async () => {
-    await api.logOutUser();
+    return new Promise(async (resolve, reject) => {
+       let {data}= await api.logOutUser();
+      resolve(data)
+    })
 }
 
 //email check for send otp 

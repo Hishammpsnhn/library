@@ -4,9 +4,9 @@ const addressSchema = require('./schema')
 const userModel = mongoose.Schema(
   {
     name: { type: String, required: true },
-    email: { type: String },
-    password: { type: String },
-    phone: { type: String, unique: true },
+    email: { type: String,required: true },
+    password: { type: String},
+    phone: { type: String },
     pic: { type: String, },
 
     addresses: [{
@@ -15,8 +15,7 @@ const userModel = mongoose.Schema(
       pincode: { type: Number, required: true },
       phoneNo: { type: Number, required: true },
     }],
-
-    googleId: { type: Number, unique: true },
+ 
   },
   {
     timestamps: true,
