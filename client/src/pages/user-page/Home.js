@@ -6,7 +6,7 @@ import Hero from "../../components/Hero";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "react-redux";
 import UserMenu from "../../components/UserMenu";
-import Table from "../../components/Table";
+import Table from "../../components/Table/Table";
 import { useNavigate } from "react-router-dom";
 import { CheckLoginUser, logout } from "../../action/auth";
 import { User } from "../../feature/UserSlice";

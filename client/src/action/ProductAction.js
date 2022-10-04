@@ -23,8 +23,10 @@ export const addProductActions = async (product) => {
 }
 
 export const getOneProduct = async (id) => {
+    console.log(id)
     return new Promise(async (resolve, reject) => {
-        const { data } = await api.getOneProduct(id)
+        const { data } = await api.getOneProduct(id);
+        console.log(data)
         resolve(data)
     })
 }

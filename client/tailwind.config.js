@@ -23,5 +23,15 @@ module.exports = {
       xl: "1700px",
     },
   },
-  plugins: [],
+  plugins: [
+    function ({addUtilities}) {
+        const extendUnderline = {
+            '.underline': {
+                'textDecoration': 'underline',
+                'text-decoration-color': '#93c5fd',
+            },
+        }
+        addUtilities(extendUnderline)
+    }
+],
 };

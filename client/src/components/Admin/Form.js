@@ -5,13 +5,15 @@ import { addProductActions, editProduct } from "../../action/ProductAction";
 import { useDispatch, useSelector } from "react-redux";
 
 
-function Form({ setForm, isEdit, currentId }) {
+function Form({ currentId, setCurrentId ,setValue }) {
 
-  const Books = useSelector((state) => (currentId ? state.products.books.find((res) => res._id === currentId) : null));
+  const Book = useSelector((state) => (currentId ? state.products.books.find((res) => res._id === currentId) : null));
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (Books) setAddProduct(Books)
-  }, [Books])
+    if (Book) setAddProduct(Book)
+  }, [Book])
 
 
   const initialState = { bookname: "", author: "", description: "", catagory: "", price: '', launch: '', image: "", discount: '' };
@@ -19,8 +21,9 @@ function Form({ setForm, isEdit, currentId }) {
 
 
   const handleClose = () => {
-    setForm((prev) => !prev);
     setAddProduct(initialState)
+    setCurrentId(null)
+    setValue(0)
   };
 
   const handleAddProduct = () => {
@@ -28,17 +31,17 @@ function Form({ setForm, isEdit, currentId }) {
     addProductActions(addProduct);
   }
   const handleEditProduct = () => {
-    console.log(addProduct)
-    // addProductActions(addProduct);
-     dispatch(editProduct(currentId,addProduct)).then((res)=>{
-      setForm((prev) => !prev);
-     })
+    dispatch(editProduct(currentId, addProduct)).then((res) => {
+      setAddProduct(initialState)
+      setValue(0)
+      setCurrentId(null)
+    })
   }
-  
+
   return (
     <div className="w-full ">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
-        <h2 className="text-center font-semibold  text-2xl pb-2 "  >{`${isEdit ? 'Edit Page' : 'Add page '}`}</h2>
+        <h2 className="text-center text-black font-semibold  text-2xl pb-5 "  >{`${currentId ? 'Edit Page' : 'Add page '}`}</h2>
         <div className="md:flex md:justify-between flex-row w-full">
           <div className="mb-4 md:w-[48%] ">
             <label
@@ -203,7 +206,7 @@ function Form({ setForm, isEdit, currentId }) {
             <Button action={handleClose} text="CLOSE" />
           </div>
           <div className="w-[50%]  ">
-            <Button text={`${isEdit ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={isEdit ? handleEditProduct :handleAddProduct} />
+            <Button text={`${currentId ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={currentId ? handleEditProduct : handleAddProduct} />
           </div>
         </div>
       </form>
