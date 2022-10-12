@@ -31,7 +31,15 @@ export const getOneProduct = async (id) => {
     })
 }
 
-export const editProduct =(id,product) =>async(dispatch)=>{
-        const { data } = await api.editProduct(id,product)
-        dispatch(editBook(data))
+export const editProduct = (id, product) => async (dispatch) => {
+    const { data } = await api.editProduct(id, product)
+    dispatch(editBook(data))
+}
+
+export const review = async (id) => {
+    return new Promise(async (resolve, reject) => {
+        const { data } = await api.review(id)
+        console.log(data)
+        resolve(data)
+    })
 }

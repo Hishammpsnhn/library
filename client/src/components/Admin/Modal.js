@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Details from "../Details";
+import Details from "../Details/Details";
 
 function Modal({setModal}) {
   

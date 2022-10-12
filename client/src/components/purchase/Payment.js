@@ -14,13 +14,13 @@ function Payment({product}) {
   const handleSubmit = () => {
     if (radio === 'cod') {
       purcheseItem({
-        orderItems:[{
+        orderItems:{
           product:id,
           name:product.bookname,
           image:product.image,
           price:product.price,
           qty:1,
-        }],
+        },
         shippingAddress,
         paymentMethod: 'COD',
         itemsPrice:product?.price,

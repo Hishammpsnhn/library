@@ -1,8 +1,6 @@
 import React from 'react'
-import Details from '../../components/Details'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import DelivaryDetails from '../../components/purchase/DelivaryDetails'
 import PurchaseItem from '../../components/purchase/PurchaseItem'
 import styles from '../../styles'
 
@@ -18,7 +16,6 @@ function PurchasePage() {
         px-8 sm:28 md:px-48 py-10 ">
                 {/* < Details /> */}
                 <PurchaseItem/>
-
                 {/* <DelivaryDetails /> */}
             </div>
             <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>

@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useEffect, useState } from "react";
 import { CheckLoginUser } from "./action/auth";
 import ForgotPassword from "./pages/user-page/ForgotPassword";
+import OrderDetails from "./pages/user-page/OrderDetails";
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/purchase/:id" element={userIsLogin ? <PurchasePage /> : <Navigate replace to="/auth" />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-
+          <Route path="/myorder/details/:id" element={<OrderDetails />} />
           {/* adminPages */}
           <Route path="/admin" element={<AdminHero />} />
 

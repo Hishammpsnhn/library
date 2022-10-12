@@ -20,4 +20,8 @@ export const addAddress = (address) => axios.post('/api/auth/user-address',addre
 
 //orders
 export const addOrderItem = (data)=> axios.post(`/api/orders`,data)
-export const myOrders = ()=> axios.get(`/api/orders/myorders`)
+export const myOrders = ()=> axios.get(`/api/orders/myorders`);
+export const getSingleOrder = (id) => axios.get(`/api/orders/${id}/getoneorder`);
+
+//myorders
+export const review = (rating) => axios.post('/api/product/review',rating)

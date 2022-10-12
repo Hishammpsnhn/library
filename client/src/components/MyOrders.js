@@ -36,11 +36,13 @@ function MyOrders() {
                     {orders.map((item, i) => {
                         return (
                             <Thead
-                                name={item.orderItems[0].name}
-                                image={item.orderItems[0].image}
+                                name={item.orderItems.name}
+                                image={item.orderItems.image}
                                 price={item.totalPrice}
                                 index={i + 1}
                                 status={item.status}
+                                myOrder={true}
+                                id={item._id}o
                             />
                         )
                     })}

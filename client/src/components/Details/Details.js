@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getOneProduct } from "../action/ProductAction";
-import { isLoading } from "../feature/BooksSlice";
-import styles from "../styles";
-import CardSkeliton from "./skellitons/CardSkeliton";
-import Rating from "./Rating";
+import { getOneProduct } from "../../action/ProductAction";
+import { isLoading } from "../../feature/BooksSlice";
+import styles from "../../styles";
+import CardSkeliton from "../skellitons/CardSkeliton";
+import Rating from "../Rating";
 import Review from "./Review";
+
 
 function Details({ setModal }) {
   const Loading = useSelector((state) => state.products.isLoading)
   const dispatch = useDispatch();
-  
+
   const { id } = useParams();
   const [book, setBook] = useState('')
 
@@ -21,16 +22,16 @@ function Details({ setModal }) {
       setBook(product);
       dispatch(isLoading(false))
     })
-  },[id])
+  }, [id])
 
   const handleClose = () => {
     setModal((prev) => !prev)
   }
 
-  if(Loading){
-    return(
+  if (Loading) {
+    return (
       <div className="text-white w-full h-[80vh] ">
-            <CardSkeliton />
+        <CardSkeliton />
       </div>
     )
   }
@@ -48,11 +49,14 @@ function Details({ setModal }) {
             <p className={`${styles.paragraph} sm:text-start capitalize italic `}>
               {book.description}
             </p>
-            <Rating rating={book.rating} />
+            <Rating rating={book.rating} value={book.rating} />
             <p className="text-white font-poppins font-thin text-2xl " >{`$ ${book.price}`}</p>
           </div>
         </div>
-      <Review/>
+        <div className='text-white pt-5 max-h-[160px] overflow-y-scroll' >
+          <h1 className='font-medium font-poppins text-lg' >Reviews</h1>
+          <Review />
+        </div>
       </div>
     </section>
   );

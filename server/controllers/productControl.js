@@ -3,8 +3,8 @@ const productModel = require('../models/productModal')
 const userModel = require('../models/userModel');
 
 const addProduct = async (req, res) => {
-    const { bookname, author, description, image, launch, price, catagory,discount } = req.body;
-    
+    const { bookname, author, description, image, launch, price, catagory, discount } = req.body;
+
 
     try {
         const products = await productModel.create({
@@ -94,6 +94,36 @@ const editProduct = async (req, res) => {
 
 }
 
+const review = async (req, res) => {
+    const { id } = req.body;
+    const { rating } = req.body;
+    let exist = false;
+    const product = await productModel.findById(id);
+    product.reviews.every(async (item) => {
+        if (item.user.equals(req.user._id)) {
+            item.rating = rating
+            exist = true;
+        }
+    });
+    const updatedProduct = await productModel.findByIdAndUpdate(id, product, { new: true });
+    //res.josn
 
+    if (!exist) {
+        console.log("not exist")
+        product.reviews.push({ rating: rating, user: req.user._id });
+        product.save();
+        //  res.status(201).json({ messgae: "add new" })
 
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct}
+    }
+    const ratingCount = updatedProduct.reviews.length;
+    let userRating = 0
+    updatedProduct.reviews.forEach(async (item) => {
+        userRating += item.rating
+    })
+    product.rating = userRating / ratingCount;
+    const updatedProduct2 = await productModel.findByIdAndUpdate(id, product, { new: true });
+    res.status(201).json(updatedProduct2)
+
+}
+
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review }
