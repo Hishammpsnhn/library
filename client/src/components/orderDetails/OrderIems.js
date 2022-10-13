@@ -5,8 +5,10 @@ import Rating from '../Rating';
 import { useParams } from 'react-router-dom'
 import { getSingleOrder } from '../../action/orderItem'
 import { review } from '../../action/ProductAction';
+import { useSelector } from 'react-redux';
 
 function OrderIems() {
+  const userIsLogin = useSelector((state) => state.user.user)
   const [rating, setRating] = useState(null)
   const { id } = useParams();
   const [order, setOrder] = useState(null);
@@ -29,7 +31,7 @@ function OrderIems() {
   }, [])
   const handleSubmit = () => {
     if (review) {
-      review({  id: order?.ProductId._id,comment:reviewText }).then((res) => {
+      review({  id: order?.ProductId._id,comment:`${userIsLogin.name} : ${reviewText}` }).then((res) => {
         console.log(res)
       })
     }

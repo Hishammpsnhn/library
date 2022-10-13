@@ -55,7 +55,9 @@ function Details({ setModal }) {
         </div>
         <div className='text-white pt-5 max-h-[160px] overflow-y-scroll' >
           <h1 className='font-medium font-poppins text-lg' >Reviews</h1>
-          <Review />
+          {book.reviews?.map((item) =>(
+          <Review comment={item.comment} />
+          ))}
         </div>
       </div>
     </section>
