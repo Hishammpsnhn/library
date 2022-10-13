@@ -37,6 +37,7 @@ export const editProduct = (id, product) => async (dispatch) => {
 }
 
 export const review = async (id) => {
+    console.log(id)
     return new Promise(async (resolve, reject) => {
         const { data } = await api.review(id)
         console.log(data)

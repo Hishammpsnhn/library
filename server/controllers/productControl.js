@@ -97,20 +97,28 @@ const editProduct = async (req, res) => {
 const review = async (req, res) => {
     const { id } = req.body;
     const { rating } = req.body;
+    const {comment}= req.body;
+   console.log(rating)
     let exist = false;
-    const product = await productModel.findById(id);
+    let product = await productModel.findById(id);
     product.reviews.every(async (item) => {
         if (item.user.equals(req.user._id)) {
-            item.rating = rating
+            if(rating) item.rating = rating
+            if(comment) {
+                 item.comment = comment;
+                console.log(product);
+               // await productModel.findByIdAndUpdate(id, product, { new: true });
+            }
             exist = true;
         }
     });
     const updatedProduct = await productModel.findByIdAndUpdate(id, product, { new: true });
     //res.josn
-
+    
     if (!exist) {
         console.log("not exist")
-        product.reviews.push({ rating: rating, user: req.user._id });
+        if(rating){product.reviews.push({rating: rating, user: req.user._id })}
+        if(comment){product.reviews.push({comment: comment, user: req.user._id })}
         product.save();
         //  res.status(201).json({ messgae: "add new" })
 

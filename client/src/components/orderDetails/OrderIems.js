@@ -10,10 +10,11 @@ function OrderIems() {
   const [rating, setRating] = useState(null)
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  console.log(order)
+  const [reviewText,setReviewText] = useState('');
+
   useEffect(() => {
     if (order) {
-      review({ rating: rating,id:order?.ProductId._id }).then((res)=>{
+      review({ rating: rating, id: order?.ProductId._id }).then((res) => {
         getSingleOrder(id).then((order) => {
           setOrder(order)
         })
@@ -26,6 +27,13 @@ function OrderIems() {
       setOrder(order)
     })
   }, [])
+  const handleSubmit = () => {
+    if (review) {
+      review({  id: order?.ProductId._id,comment:reviewText }).then((res) => {
+        console.log(res)
+      })
+    }
+  }
   return (
     <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto flex-col`}>
       <div className="border   border-blue-300 justify-between w-full sm:flex-row p-2">
@@ -56,7 +64,10 @@ function OrderIems() {
             <p className='text-blue-800 cursor-pointer'>Write a review</p>
           </div>
         </div>
-
+        <div>
+          <input type='text' className='' placeholder='add a review' onChange={(e)=> setReviewText(e.target.value)} />
+          <button className='bg-slate-400  text-black 'onClick={handleSubmit}>Submit</button>
+        </div>
       </div>
     </section>
   )
