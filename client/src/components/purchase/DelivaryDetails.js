@@ -41,7 +41,7 @@ function DelivaryDetails({ setStepper, setDelivaryDetails }) {
     }
 
     return (
-        <div className="w-full ">
+        <div className="w-full  ">
             <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 ">
                 <div className="md:justify-between flex-row w-full">
                     <label

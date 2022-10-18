@@ -5,7 +5,7 @@ const data = [
     { item: "All Products" },
     { item: "Add Product" },
     { item: "Edit Products" },
-    { item: "All Products" },
+    { item: "Ordered Products" },
     { item: "All Products" },
 ]
 
@@ -20,6 +20,9 @@ function ListHero({value ,setValue}) {
         }
         else if(index === 2){
           setValue(2)
+        }
+        else if(index === 3){
+          setValue(3)
         }
     }
     return (

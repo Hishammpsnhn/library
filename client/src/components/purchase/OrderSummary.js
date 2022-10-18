@@ -46,6 +46,9 @@ function OrderSummary({ setStepper,product,setProduct }) {
                 </div> 
                 : <OrderedProduct product={product} />}
             </div>
+
+            <h2 className='text-white text-xl font-medium pt-5 '>Return Details</h2>
+            <p className='text-red-700' >The Product must return with in 7 days</p>
             <h2 className='text-white text-xl font-medium pt-5 '>Price Details</h2>
             <div className="text-white mt-0   flex flex-col " >
                 <div className='justify-between flex flex-row' >

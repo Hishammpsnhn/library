@@ -37,8 +37,8 @@ function OrderIems() {
     }
   }
   return (
-    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto flex-col`}>
-      <div className="border   border-blue-300 justify-between w-full sm:flex-row p-2">
+    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto flex-col p-5 min-h-[78vh]  `}>
+      <div className="border border-blue-300 justify-between w-full sm:flex-row p-3 ">
         <div className="xs:flex justify-between">
 
           <div className="flex flex-col pl-2  sm:items-start">

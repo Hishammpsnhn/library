@@ -18,10 +18,14 @@ export const forgotPasswordOtp= (otp)=> axios.post('/api/auth/forgot-password/ot
 //user address
 export const addAddress = (address) => axios.post('/api/auth/user-address',address)
 
-//orders
+//orders Api
+export const allOrders = () => axios.get('/api/orders')
 export const addOrderItem = (data)=> axios.post(`/api/orders`,data)
 export const myOrders = ()=> axios.get(`/api/orders/myorders`);
 export const getSingleOrder = (id) => axios.get(`/api/orders/${id}/getoneorder`);
+export const returnProduct = (id) => axios.get(`/api/orders/${id}/return`)
 
-//myorders
+//myorders-review
 export const review = (rating) => axios.post('/api/product/review',rating)
+//search
+export const search = (search) => axios.get(`/api/product/search?search=${search}`,search)

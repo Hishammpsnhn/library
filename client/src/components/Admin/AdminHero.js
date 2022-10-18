@@ -11,13 +11,13 @@ import Allproducts from "./Herocomponents/Allproducts";
 import { getProduct } from "../../action/ProductAction";
 import { useDispatch, useSelector } from "react-redux";
 import Thead from "../Table/Thead";
+import AllOrdersAdmin from "./AllOrdersAdmin";
 
 function AdminHero() {
   const { books, isLoading } = useSelector((state) => state.products)
 
   const [modal, setModal] = useState(false);
   const [value, setValue] = useState(0);
-  console.log(value)
   const [currentId, setCurrentId] = useState(null);
 
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function AdminHero() {
     <>
       <div className="overflow-hidden">
         <div className=" bg-primary text-white flex flex-col justify-center">
-          <Header />
+          
           {/* <h2 className=" text-[50px] p-2 ss:text-[70px] text-center font-medium font-poppins">
             Admin Page
           </h2>
@@ -76,11 +76,12 @@ function AdminHero() {
                     <div>select a product to edit</div>)
                 )
               }
+              {
+                value === 3 && <AllOrdersAdmin/>
+              }
             </div>
           </div>
-          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <Footer />
-          </div>
+          
         </div>
       </div>
       <div className={`${modal ? "flex" : "hidden"}  `}>

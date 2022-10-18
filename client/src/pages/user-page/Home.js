@@ -32,24 +32,18 @@ const dispatch = useDispatch();
     <>
       <div className="bg-primary w-full ">
         <div className={`${styles.flexCenter} ${styles.paddingX}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Header />
-          </div>
         </div>
         <div className={` sticky top-0 z-10`}>
           <UserMenu value={value} setValue={setValue} />
         </div>
         <div className="bg-gradient-to-r from-black via-slate-800 to-black  ">
           {value === 0 && <Hero books={books} isLoading={isLoading} />}
-          {value === 1 && <div>Notifications</div>}
-          {value === 2 && <MyAccount/>}
-          {value === 3 && <MyOrders/>}
+          {value === 1 && <MyAccount/>}
+          {value === 2 && <MyOrders/>}
 
 
         </div>
-        <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
-          <Footer />
-        </div>
+        
       </div>
     </>
   );

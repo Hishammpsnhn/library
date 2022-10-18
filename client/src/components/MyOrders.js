@@ -24,29 +24,30 @@ function MyOrders() {
             <TableSkeliton />
             <TableSkeliton />
             <TableSkeliton />
-            <TableSkeliton />
-            <TableSkeliton />
+
         </div>
     )
 
     return (
-        <div className="  py-4 sm:px-6 lg:px-8 overflow-y-scroll">
-                <table className=" w-full m-auto text-center">
-                    <Table />
-                    {orders.map((item, i) => {
-                        return (
-                            <Thead
-                                name={item.orderItems.name}
-                                image={item.orderItems.image}
-                                price={item.totalPrice}
-                                index={i + 1}
-                                status={item.status}
-                                myOrder={true}
-                                id={item._id}o
-                            />
-                        )
-                    })}
-                </table>
+        <div className="  py-4 min-h-[68vh] sm:px-6 lg:px-8 overflow-x-scroll">
+            <table className=" w-full m-auto text-center">
+                <Table myOrder={true} />
+                {orders.map((item, i) => {
+                    return (
+                        <Thead
+                            returnLastDate={item.returnLastDate}
+                            createdAt={item.createdAt}
+                            name={item.orderItems.name}
+                            image={item.orderItems.image}
+                            price={item.totalPrice}
+                            index={i + 1}
+                            status={item.status}
+                            myOrder={true}
+                            id={item._id} o
+                        />
+                    )
+                })}
+            </table>
         </div>
 
     )

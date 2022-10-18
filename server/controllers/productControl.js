@@ -97,28 +97,28 @@ const editProduct = async (req, res) => {
 const review = async (req, res) => {
     const { id } = req.body;
     const { rating } = req.body;
-    const {comment}= req.body;
-   console.log(rating)
+    const { comment } = req.body;
+    console.log(rating)
     let exist = false;
     let product = await productModel.findById(id);
     product.reviews.every(async (item) => {
         if (item.user.equals(req.user._id)) {
-            if(rating) item.rating = rating
-            if(comment) {
-                 item.comment = comment;
+            if (rating) item.rating = rating
+            if (comment) {
+                item.comment = comment;
                 console.log(product);
-               // await productModel.findByIdAndUpdate(id, product, { new: true });
+                // await productModel.findByIdAndUpdate(id, product, { new: true });
             }
             exist = true;
         }
     });
     const updatedProduct = await productModel.findByIdAndUpdate(id, product, { new: true });
     //res.josn
-    
+
     if (!exist) {
         console.log("not exist")
-        if(rating){product.reviews.push({rating: rating, user: req.user._id })}
-        if(comment){product.reviews.push({comment: comment, user: req.user._id })}
+        if (rating) { product.reviews.push({ rating: rating, user: req.user._id }) }
+        if (comment) { product.reviews.push({ comment: comment, user: req.user._id }) }
         product.save();
         //  res.status(201).json({ messgae: "add new" })
 
@@ -134,4 +134,20 @@ const review = async (req, res) => {
 
 }
 
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review }
+const search = async (req, res) => {
+    const keywords = req.query.search
+        ? {
+            $or: [
+                { bookname: { $regex: req.query.search, $options: "1" } },
+                { author: { $regex: req.query.search, $options: "1" } },
+            ],
+        }
+        : {};
+    console.log(keywords);
+    const product = await productModel
+        .find(keywords)
+        .find({ _id: { $ne: req.query._id } });
+    res.send(product);
+}
+
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search }

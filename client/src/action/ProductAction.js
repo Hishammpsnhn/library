@@ -23,7 +23,6 @@ export const addProductActions = async (product) => {
 }
 
 export const getOneProduct = async (id) => {
-    console.log(id)
     return new Promise(async (resolve, reject) => {
         const { data } = await api.getOneProduct(id);
         console.log(data)
@@ -43,4 +42,12 @@ export const review = async (id) => {
         console.log(data)
         resolve(data)
     })
+}
+
+export const searching=(search)=> async (dispatch) => {
+    dispatch(isLoading(true))
+    const { data } = await api.search(search)
+    dispatch(addBooks(data));
+    dispatch(isLoading(false))
+
 }

@@ -12,16 +12,10 @@ function DetailsPage() {
     <>
     <div className="bg-primary w-full overflow-hidden  ">
         <div className={`${styles.flexCenter} ${styles.paddingX}`}>
-          <div className={`${styles.boxWidth}`}>
-            <Header />
-          </div>
         </div>
         <div className="bg-gradient-to-r from-black via-slate-800 to-black 
-        px-8 sm:28 md:px-48 py-10 ">
+        px-8 sm:28 md:px-48 py-10 min-h-[78vh]">
           < Details/>
-        </div>
-        <div className={`${styles.boxWidth} ${styles.flexCenter} m-auto `}>
-          <Footer />
         </div>
       </div>
     </>

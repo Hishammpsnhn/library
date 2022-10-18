@@ -10,11 +10,13 @@ import { useEffect, useState } from "react";
 import { CheckLoginUser } from "./action/auth";
 import ForgotPassword from "./pages/user-page/ForgotPassword";
 import OrderDetails from "./pages/user-page/OrderDetails";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 
 function App() {
   const userIsLogin = useSelector((state) => state.user.user)
-  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,11 +25,12 @@ function App() {
 
 
   return (
-    <div className=" ">
-
+    <div className="bg-primary w-full">
+      <Header />
       <BrowserRouter>
         <Routes>
           {/* user pages */}
+
           <Route path="/" element={<Navigate replace to="/home" />} />
           <Route path="/home" element={<Home />} />
           <Route path="/auth" element={userIsLogin ? <Navigate replace to="/home" /> : <Auth />} />
@@ -40,6 +43,7 @@ function App() {
 
         </Routes>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

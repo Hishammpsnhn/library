@@ -1,6 +1,19 @@
 const productModal = require('../models/productModal')
 const orderModal = require("../models/orderModal")
 
+// @desc    Get All orders for admin
+// @route   GET /api/orders
+// @access  Private
+const allOrders = async (req, res) => {
+
+    try {
+        const allOrder = await orderModal.find()
+            .populate('ProductId')
+        res.status(200).json(allOrder)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
 
 // @desc   Create a new order
 // @route  POST /api/orders/
@@ -14,6 +27,16 @@ const addOrderItem = async (req, res) => {
         shippingPrice,
         totalPrice,
     } = req.body
+    let currentDate = new Date();
+    let cDay = currentDate.getDate()
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+    const returnDate = addDays(currentDate, 7);
+    console.log(returnDate)
+
     try {
         const product = await productModal.findById(orderItems.product)
         if (product.countInStock <= 0) {
@@ -29,6 +52,7 @@ const addOrderItem = async (req, res) => {
                 shippingPrice,
                 totalPrice,
                 status: paymentMethod === 'COD' ? 'Placed' : 'Pending',
+                returnLastDate: returnDate,
             })
             product.countInStock -= 1
             await product.save()
@@ -48,6 +72,9 @@ const getMyOrders = async (req, res) => {
     res.json(orders)
 }
 
+// @desc    Get one order details
+// @route   GET /api/orders/:id/getoneorder
+// @access  Private
 const oneOrderProduct = async (req, res) => {
     const { id } = req.params
     try {
@@ -59,4 +86,24 @@ const oneOrderProduct = async (req, res) => {
     }
 }
 
-module.exports = { addOrderItem, getMyOrders, oneOrderProduct }
+
+// @desc    returning Product
+// @route   GET /api/orders/:id/return
+// @access  Private
+const returnProduct = async (req, res) => {
+    const { id } = req.params
+    try {
+        const order = await orderModal.findByIdAndUpdate(id, {
+            isReturned: true,
+            returnedAt: new Date(),
+        })
+        const orders = await orderModal.find()
+        .populate('ProductId')
+        res.status(200).json(orders);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+module.exports = { addOrderItem, getMyOrders, oneOrderProduct, allOrders, returnProduct }

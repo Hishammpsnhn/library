@@ -11,7 +11,7 @@ function OrderedProduct({product}) {
             <div className='w-full pl-2 capitalize '>
                 <p className='font-poppins text-lg font-medium ' >{product?.bookname}</p>
                 <p>{product?.author}</p>
-                <Rating rating={product?.rating} />
+                <Rating rating={product?.rating} editing={false} />
             </div>
         </div>
     )

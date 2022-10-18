@@ -43,6 +43,7 @@ app.use((req, res, next) => {
   next();
 })
 
+
 // Routes  
 app.use('/api/product', require('./Routes/productRoutes'));
 app.use('/api/auth', require('./Routes/userRoutes'));

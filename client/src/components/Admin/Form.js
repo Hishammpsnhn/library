@@ -27,7 +27,6 @@ function Form({ currentId, setCurrentId ,setValue }) {
   };
 
   const handleAddProduct = () => {
-    console.log(addProduct)
     addProductActions(addProduct);
   }
   const handleEditProduct = () => {

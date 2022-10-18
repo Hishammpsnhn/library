@@ -65,7 +65,7 @@ const orderSchema = mongoose.Schema(
       required: true,
       default: 0.0,
     },
-    isPaid: {
+    isReturned: {
       type: Boolean,
       required: true,
       default: false,
@@ -79,7 +79,10 @@ const orderSchema = mongoose.Schema(
       default: 'Pending',
       enum: ['Pending', 'Placed', 'Cancelled', 'Delivered', 'Shipped'],
     },
-    deliverdAt: {
+    returnLastDate: {
+      type: Date,
+    },
+    returnedAt: {
       type: Date,
     },
   },
