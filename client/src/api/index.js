@@ -27,5 +27,6 @@ export const returnProduct = (id) => axios.get(`/api/orders/${id}/return`)
 
 //myorders-review
 export const review = (rating) => axios.post('/api/product/review',rating)
-//search
+//search && catagory sort
 export const search = (search) => axios.get(`/api/product/search?search=${search}`,search)
+export const sciBooks = ()=>axios.get('/api/product/scibooks')

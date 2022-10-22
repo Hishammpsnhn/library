@@ -13,6 +13,7 @@ export const getProduct = async (dispatch) => {
 }
 
 export const addProductActions = async (product) => {
+    console.log(product)
     try {
         const { data } = await api.addProduct(product)
         console.log(data)
@@ -50,4 +51,11 @@ export const searching=(search)=> async (dispatch) => {
     dispatch(addBooks(data));
     dispatch(isLoading(false))
 
+}
+export const sciBooks =async ()=>{
+    return new Promise(async (resolve, reject) => {
+        const { data } = await api.sciBooks()
+        resolve(data)
+     })
+  
 }

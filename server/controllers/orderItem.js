@@ -97,8 +97,16 @@ const returnProduct = async (req, res) => {
             isReturned: true,
             returnedAt: new Date(),
         })
+        console.log(order)
+        if (order) {
+            const productId = order.ProductId
+            console.log(productId)
+            const product = await productModal.findByIdAndUpdate(productId, {
+                countInStock: + 1
+            })
+        }
         const orders = await orderModal.find()
-        .populate('ProductId')
+            .populate('ProductId')
         res.status(200).json(orders);
     } catch (error) {
         console.log(error);

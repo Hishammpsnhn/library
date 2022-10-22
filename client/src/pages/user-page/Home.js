@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProduct } from "../../action/ProductAction";
+import { getProduct, sciBooks } from "../../action/ProductAction";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
@@ -15,12 +15,18 @@ import MyOrders from "../../components/MyOrders";
 
 function Home() {
   const { books, isLoading } = useSelector((state) => state.products)
+  const [sciFiBooks, setSciFiBooks] = useState([])
+
   const [value, setValue] = useState(0)
   const navigate = useNavigate();
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  
 
+  useEffect(() => {
+    sciBooks().then((res) => {
+      setSciFiBooks(res)
+    })
+  }, [])
   useEffect(() => {
     if (books.length === 0) {
       dispatch(getProduct)
@@ -37,13 +43,18 @@ const dispatch = useDispatch();
           <UserMenu value={value} setValue={setValue} />
         </div>
         <div className="bg-gradient-to-r from-black via-slate-800 to-black  ">
-          {value === 0 && <Hero books={books} isLoading={isLoading} />}
-          {value === 1 && <MyAccount/>}
-          {value === 2 && <MyOrders/>}
+          {value === 0 &&
+            <Hero
+              books={books}
+              isLoading={isLoading}
+              sciFiBooks={sciFiBooks}
+            />}
+          {value === 1 && <MyAccount />}
+          {value === 2 && <MyOrders />}
 
 
         </div>
-        
+
       </div>
     </>
   );

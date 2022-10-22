@@ -3,9 +3,8 @@ const productModel = require('../models/productModal')
 const userModel = require('../models/userModel');
 
 const addProduct = async (req, res) => {
+
     const { bookname, author, description, image, launch, price, catagory, discount } = req.body;
-
-
     try {
         const products = await productModel.create({
             author,
@@ -26,12 +25,15 @@ const addProduct = async (req, res) => {
 const getProduct = async (req, res) => {
     try {
         const allProducts = await productModel.find()
+        allProducts.sort(function (a, b) {
+            return b.rating - a.rating;
+        });
         res.status(200).json(allProducts)
     } catch (error) {
         console.log(error);
     }
-
 }
+
 const OneProduct = async (req, res) => {
 
     const { id } = req.params;
@@ -98,7 +100,6 @@ const review = async (req, res) => {
     const { id } = req.body;
     const { rating } = req.body;
     const { comment } = req.body;
-    console.log(rating)
     let exist = false;
     let product = await productModel.findById(id);
     product.reviews.every(async (item) => {
@@ -106,7 +107,6 @@ const review = async (req, res) => {
             if (rating) item.rating = rating
             if (comment) {
                 item.comment = comment;
-                console.log(product);
                 // await productModel.findByIdAndUpdate(id, product, { new: true });
             }
             exist = true;
@@ -135,6 +135,7 @@ const review = async (req, res) => {
 }
 
 const search = async (req, res) => {
+    console.log("called serac ")
     const keywords = req.query.search
         ? {
             $or: [
@@ -143,11 +144,20 @@ const search = async (req, res) => {
             ],
         }
         : {};
-    console.log(keywords);
+  
     const product = await productModel
         .find(keywords)
         .find({ _id: { $ne: req.query._id } });
     res.send(product);
 }
-
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search }
+const getSciFiProduct = async (req, res) => {
+    try {
+        const products = await productModel.find({
+            catagory: "Comedy"
+        })
+        res.status(200).json(products)
+    } catch (error) {
+        console.log(error);
+    }
+}
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search,getSciFiProduct }

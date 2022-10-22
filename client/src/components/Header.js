@@ -3,18 +3,23 @@ import { useDispatch } from "react-redux";
 import { getProduct, searching } from "../action/ProductAction";
 import Librery from "../Assets/library-svgrepo-com (1).svg";
 import styles from "../styles";
+import { useCallback } from 'react';
+import _debounce from 'lodash/debounce';
+
 function Header() {
-  const [search,setSearch] = useState('')
+  const [search, setSearch] = useState('')
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-   if(search){
-    dispatch(searching(search))
-   }else{
-    dispatch(getProduct)
-   }
-  }, [search])
-  
+
+  const debounceFn = useCallback(_debounce(handleDebounceFn, 1000), []);
+
+  function handleDebounceFn(inputValue) {
+    dispatch(searching(inputValue))
+  }
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+    debounceFn(e.target.value)
+  }
+
   return (
     <div className="text-white border-b-[1px]  border-blue-300  shadow font-poppins flex p-4 items-center justify-between ">
       <div className="w-full flex items-center ">
@@ -26,11 +31,11 @@ function Header() {
       <div
         className={`${styles.flexCenter} w-full h-[35px] p-1 justify-evenly  flex bg-primary border  border-blue-300 rounded-lg`}
       >
-        <i  className="fa-solid fa-magnifying-glass"></i>
+        <i className="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => handleChange(e)}
           className="bg-primary border-gray-100 w-full outline-none text-[15px] "
           placeholder=" search here..."
         />
