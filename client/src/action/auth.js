@@ -43,8 +43,7 @@ export const forgotPasswordOtp = (otp) => {
 }
 
 //add address for pusrchase
-export const addAddress = async (address) => {
-    console.log(address)
+export const addAddres = async (address) => {
     return new Promise(async (resolve, reject) => {
         const { data } = await api.addAddress(address)
         resolve(data)

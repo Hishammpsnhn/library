@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 import { purcheseItem } from '../../action/orderItem';
 import Button from '../Button'
 
-function Payment({product}) {
+function Payment({product,addresRadio}) {
   console.log(product)
-  const shippingAddress = useSelector((state) => state.user.user?.addresses[0]);
+  const shippingAddress = useSelector((state) => state.user.user?.addresses[addresRadio]);
   const total = product?.discount / 100 * product?.price
   const [radio, setRadio] = useState("cod")
   const { id } = useParams();

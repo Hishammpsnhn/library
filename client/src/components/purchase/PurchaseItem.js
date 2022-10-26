@@ -8,6 +8,8 @@ import Payment from './Payment';
 function PurchaseItem() {
   const [stepper, setStepper] = useState(0)
   const [product, setProduct] = useState(null);
+  const [addAddress, setAddAddress] = useState(false)
+  const [addresRadio, setAddResRadio] = useState(null)
 
   const [delivaryDetails, setDelivaryDetails] = useState(null)
   return (
@@ -21,9 +23,25 @@ function PurchaseItem() {
       </section>
       <div className='md:w-[60%]    flex flex-row p-5 m-auto ' >
         {stepper === 0 &&
-          <DelivaryDetails setDelivaryDetails={setDelivaryDetails} setStepper={setStepper} />}
-        {stepper === 1 && <OrderSummary setStepper={setStepper} product={product} setProduct={setProduct} />}
-        {stepper === 2 && <Payment setStepper={setStepper} product={product} />}
+          <DelivaryDetails
+            setDelivaryDetails={setDelivaryDetails}
+            setStepper={setStepper}
+            addAddress={addAddress} 
+            />}
+        {stepper === 1 &&
+          <OrderSummary
+            setStepper={setStepper}
+            product={product}
+            setProduct={setProduct}
+            setAddAddress={setAddAddress}
+            setAddResRadio={setAddResRadio}
+            addresRadio={addresRadio}
+          />}
+        {stepper === 2 &&
+          <Payment
+            setStepper={setStepper}
+            product={product} 
+            addresRadio={addresRadio}/>}
       </div>
     </>
   )

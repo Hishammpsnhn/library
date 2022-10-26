@@ -7,17 +7,25 @@ import { getSingleOrder } from '../../action/orderItem';
 function Thead({ setValue, index, image, name, price, status, id, handleEdit, myOrder, createdAt, returnLastDate }) {
     const navigate = useNavigate();
 
-    //Time left for return
-    let currentDate = new Date();
-    let cDay = currentDate.getDate()
     function addDays(date, days) {
         var result = new Date(date);
         result.setDate(result.getDate() + days);
         return result;
     }
+    
+    var one_day = 1000 * 60 * 60 * 24
+    let currentDate = new Date();
     const returnDate = addDays(createdAt, 7);
-    const dayLeft = returnDate.getDate() - cDay;
-    if(dayLeft <= 0){
+  
+    if (currentDate.getMonth() == 11 && currentDate.getdate() > 25)
+    returnDate.setFullYear(returnDate.getFullYear() + 1)
+
+    var Result = Math.round(returnDate.getTime() - currentDate.getTime()) / (one_day);
+    // To remove the decimals from the (Result) resulting days value
+    var dayLeft = Result.toFixed(0);
+    //var dayLeft = returnDate.getDate() - cDay;
+   
+    if (dayLeft === 0) {
         dayLeft = 0
     }
 

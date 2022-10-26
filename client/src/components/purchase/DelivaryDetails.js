@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { addAddress } from '../../action/auth'
+import { addAddres } from '../../action/auth'
 import Button from '../Button'
 const initialState = { address: '', city: '', pincode: '', phoneNo: '' }
 
-function DelivaryDetails({ setStepper, setDelivaryDetails }) {
+function DelivaryDetails({ setStepper, setDelivaryDetails, addAddress }) {
     const userIsLogin = useSelector((state) => state.user.user);
+    console.log(addAddress)
+    if (addAddress === true) {
+        setStepper(0)
+    } else {
+        if (userIsLogin?.addresses?.length !== 0) setStepper(1)
+    }
+
     const [data, setData] = useState(initialState)
-
-    if (userIsLogin?.addresses?.length > 0) setStepper(1)
-
 
     const handleSubmit = () => {
         if (!data.address || !data.city || !data.phoneNo || !data.pincode) {
@@ -17,7 +21,7 @@ function DelivaryDetails({ setStepper, setDelivaryDetails }) {
             return;
         }
         setStepper(1)
-        addAddress(data).then((res) => {
+        addAddres(data).then((res) => {
             setDelivaryDetails(res)
         })
     }

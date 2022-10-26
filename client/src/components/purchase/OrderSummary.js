@@ -7,9 +7,8 @@ import Button from '../Button'
 import CardSkeliton from '../skellitons/CardSkeliton';
 import OrderedProduct from './OrderedProduct';
 
-function OrderSummary({ setStepper,product,setProduct }) {
-    const userIsLogin = useSelector((state) => state.user.user?.addresses[0]);
-
+function OrderSummary({ setStepper, product, setProduct, setAddAddress, setAddResRadio,addresRadio }) {
+    const userIsLogin = useSelector((state) => state.user.user);
     const Loading = useSelector((state) => state.products.isLoading)
 
     const effectRan = useRef(false);
@@ -28,23 +27,53 @@ function OrderSummary({ setStepper,product,setProduct }) {
         effectRan.current = true
 
     }, [])
-    const total = product?.discount / 100 * product?.price
+    const total = product?.discount / 100 * product?.price;
+    const handleRadioChange = (i) => {
+        setAddResRadio(i)
+    }
+    const handleAddAdress = () => {
+        setAddAddress(true)
+        setStepper(0)
+    }
+    const handleSubmit = ()=>{
+        if(addresRadio){
+            setStepper(2)
+        }else{
+            alert("select a address")
+        }
+    }
     return (
         <div className='h-fit w-full' >
-            <h2 className='text-white text-xl font-medium pt-5 '>Delivary to:</h2>
-            <div className='text-white' >
-                <p>{userIsLogin?.addresses}</p>
-                <p>{userIsLogin?.city}</p>
-                <p>{userIsLogin?.pincode}</p>
-                <p>{userIsLogin?.phoneNo}</p>
+            <div className='flex flex-row justify-between'>
+                <h2 className='text-white text-xl font-medium pt-5 '>Delivary to:</h2>
+                <Button action={handleAddAdress} text='Add Address' style='p-1 text-[15px]' />
             </div>
+            {userIsLogin.addresses?.map((item, i) => (
+                <div className={`w-full flex  text-white mt-1 p-2 ${userIsLogin?.addresses.length - 1 == i && 'border-b-2'} border-t-2 border-gray-300`}>
+                    <input className='mr-5' type="radio" id="html" name="fav_language"
+                        value={i}
+                        onClick={() => handleRadioChange(i)}
+                    ></input>
+                    <div>
+                        <div className=' flex flex-row text-lg font-medium capitalize '>
+                            <p>{userIsLogin?.name},</p>
+                            <p>{item.pincode}</p>
+                        </div>
+                        <div className="flex flex-row text-sm font-thin capitalize ">
+                            <p>{item.address},</p>
+                            <p>{item.city},</p>
+                            <p>{item.phoneNo}</p>
+                        </div>
+                    </div>
+                </div>
+            ))}
             <h2 className='text-white text-xl font-medium pt-5 '>Product Details</h2>
             <div className="w-full h-[100%] overflow-hidden" >
                 {Loading ?
-                <div  >
-                    <CardSkeliton /> 
-                </div> 
-                : <OrderedProduct product={product} />}
+                    <div  >
+                        <CardSkeliton />
+                    </div>
+                    : <OrderedProduct product={product} />}
             </div>
 
             <h2 className='text-white text-xl font-medium pt-5 '>Return Details</h2>
@@ -69,7 +98,9 @@ function OrderSummary({ setStepper,product,setProduct }) {
 
                 <p>{` Total ₹ ${product?.price - total}`}</p>
             </div>
-            <Button text="Continue" action={() => setStepper(2)} style='mt-5' />
+            <Button text="Continue"
+                action={handleSubmit}
+                style='mt-5' />
         </div>
     )
 }
