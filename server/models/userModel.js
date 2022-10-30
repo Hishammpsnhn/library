@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
-const addressSchema = require('./schema')
+// const addressSchema = require('./schema')
+
+const addressSchema = mongoose.Schema({
+  address: { type: String, },
+  city: { type: String, },
+  pincode: { type: String, },
+  phoneNo: { type: String, },
+})
 
 const userModel = mongoose.Schema(
   {
@@ -8,14 +15,7 @@ const userModel = mongoose.Schema(
     password: { type: String},
     phone: { type: String },
     pic: { type: String, },
-
-    addresses: [{
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      pincode: { type: Number, required: true },
-      phoneNo: { type: Number, required: true },
-    }],
- 
+    addresses: [addressSchema], 
   },
   {
     timestamps: true,

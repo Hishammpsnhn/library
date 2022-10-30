@@ -1,17 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from '../action/auth'
+import { addressDelete, logout } from '../action/auth'
 import { User } from '../feature/UserSlice';
 import Button from './Button';
 import { useNavigate } from 'react-router-dom'
+import { RiDeleteBin2Line } from 'react-icons/ri';
+import { toast, ToastContainer } from 'react-toastify';
 function MyAccount() {
     const userIsLogin = useSelector((state) => state.user.user)
-    console.log(userIsLogin)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [address, setAddress] = useState([])
+
+    useEffect(() => {
+        setAddress(userIsLogin?.addresses)
+    }, [userIsLogin])
 
     const handleLogout = () => {
-        console.log('called loggout')
         logout().then((res) => {
             console.log(res)
             localStorage.clear()
@@ -23,7 +28,14 @@ function MyAccount() {
     const handleLogin = () => {
         navigate('/auth')
     }
+    const handleDelete = (id) => {
+        const ids = toast.loading("Please wait...")
+        dispatch(addressDelete(id)).then((res) => {
+            setAddress(address.filter((item) => item._id !== id))
+            toast.update(ids, { render: "Address deleted", type: "success", isLoading: false });
+        })
 
+    }
 
     return (
         <div className=' w-full text-white font-poppins p-2 min-h-[68vh]'>
@@ -36,22 +48,29 @@ function MyAccount() {
                             <p>{userIsLogin?.email}</p>
                         </div>
                         <div className='w-[80%]'>
+                            <h5 className='text-lg font-medium'>My Address :</h5>
                             {
-                                userIsLogin.addresses?.map((item) => (
-                                    <div className=' w-full p-2  border-solid border-2 border-gray-400'>
-                                        <div className=' flex flex-row text-lg font-medium capitalize '>
-                                            <p>{userIsLogin?.name},</p>
-                                            <p>{item.pincode}</p>
+                                address.map((item) => (
+                                    <div className=' w-full p-2 flex justify-between  border-solid border-2 border-gray-400'>
+                                        <div>
+                                            <div className=' flex flex-row justify-between text-lg font-medium capitalize '>
+                                                <p>{userIsLogin?.name},</p>                                                <p>{item.pincode}</p>
+                                            </div>
+                                            <div className="flex flex-row text-sm font-thin capitalize ">
+                                                <p>{item.address},</p>
+                                                <p>{item.city},</p>
+                                                <p>{item.phoneNo}</p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-row text-sm font-thin capitalize ">
-                                            <p>{item.address},</p>
-                                            <p>{item.city},</p>
-                                            <p>{item.phoneNo}</p>
+                                        <div className='text-red-700  flex  items-center text-xl hover:text-red-900 cursor-pointer '>
+                                            <RiDeleteBin2Line onClick={() => handleDelete(item._id)} />
+                                            <ToastContainer
+                                            theme="dark"/>
                                         </div>
                                     </div>
                                 ))
                             }
-                        {/* <Button  text="Add New Address" /> */}
+                            {/* <Button  text="Add New Address" /> */}
                         </div>
                     </>
                 )}

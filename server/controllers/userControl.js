@@ -34,12 +34,12 @@ const registerUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   console.log("helokk")
 
-   const user = await Users.create({
-     name: username,
-     phone,
-     email,
-     password: hashedPassword,
-   });
+  const user = await Users.create({
+    name: username,
+    phone,
+    email,
+    password: hashedPassword,
+  });
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -101,11 +101,22 @@ const forgotPasswordOtp = async (req, res) => {
 const addAdress = async (req, res) => {
   console.log(req.body)
   const user = await userModel.findById(req.user._id)
-  user.addresses.push(req.body)
-  const updatedPost = await user.save()
-  console.log(updatedPost)
+  user.addresses.push({ ...req.body })
+  const updatedUser = await user.save()
+  console.log(updatedUser)
+  res.json(updatedUser)
+}
+const addressDelete = async (req, res) => {
+  const user = await userModel.findById(req.user._id)
+  if (user) {
+    if (req.params.id) {
+      user.addresses.splice(req.params.id, 1)
+    }
+    const updatedUser = await user.save()
+    console.log(updatedUser)
+    res.json(updatedUser)
+  }
 }
 
 
-
-module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp, addAdress, logout };
+module.exports = { registerUser, CheckLoginUser, forgotPasswordEmail, forgotPasswordOtp, addAdress, logout, addressDelete };

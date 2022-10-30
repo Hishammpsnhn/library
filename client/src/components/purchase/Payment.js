@@ -1,32 +1,49 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify';
 import { purcheseItem } from '../../action/orderItem';
 import Button from '../Button'
 
-function Payment({product,addresRadio}) {
-  console.log(product)
+function Payment({ product, addresRadio }) {
+
   const shippingAddress = useSelector((state) => state.user.user?.addresses[addresRadio]);
   const total = product?.discount / 100 * product?.price
   const [radio, setRadio] = useState("cod")
   const { id } = useParams();
-
+  const navigate = useNavigate()
   const handleSubmit = () => {
+    //do something else
     if (radio === 'cod') {
+      const ids = toast.loading("Please wait...")
       purcheseItem({
-        orderItems:{
-          product:id,
-          name:product.bookname,
-          image:product.image,
-          price:product.price,
-          qty:1,
+        orderItems: {
+          product: id,
+          name: product.bookname,
+          image: product.image,
+          price: product.price,
+          qty: 1,
         },
         shippingAddress,
         paymentMethod: 'COD',
-        itemsPrice:product?.price,
-        shippingPrice:0,
-        totalPrice:product?.price - total
+        itemsPrice: product?.price,
+        shippingPrice: 0,
+        totalPrice: product?.price - total
+      }).then(() => {
+        toast.update(ids, { render: "Order Placed", type: "success", isLoading: false })
+          navigate('/')   
       })
+    } else {
+      toast.info('comming soon!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   }
 
@@ -57,6 +74,7 @@ function Payment({product,addresRadio}) {
       </ul>
       <div className=' m-auto w-[60%] pt-5'>
         <Button action={handleSubmit} text='NEXT' />
+        <ToastContainer autoClose={5000} />
       </div>
     </div>
   )

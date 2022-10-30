@@ -4,8 +4,10 @@ import FileBase64 from 'react-file-base64'
 import { addProductActions, editProduct } from "../../action/ProductAction";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function Form({ currentId, setCurrentId ,setValue }) {
+function Form({ currentId, setCurrentId, setValue }) {
 
   const Book = useSelector((state) => (currentId ? state.products.books.find((res) => res._id === currentId) : null));
 
@@ -27,9 +29,29 @@ function Form({ currentId, setCurrentId ,setValue }) {
   };
 
   const handleAddProduct = () => {
+    toast('Added', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
     addProductActions(addProduct);
   }
   const handleEditProduct = () => {
+    toast('edited', {
+      position: "top-right",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
     dispatch(editProduct(currentId, addProduct)).then((res) => {
       setAddProduct(initialState)
       setValue(0)
@@ -206,6 +228,7 @@ function Form({ currentId, setCurrentId ,setValue }) {
           </div>
           <div className="w-[50%]  ">
             <Button text={`${currentId ? "EDIT PRODUCT" : "ADD PRODUCT"}`} action={currentId ? handleEditProduct : handleAddProduct} />
+            <ToastContainer />
           </div>
         </div>
       </form>

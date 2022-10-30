@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 import { addAddres } from '../../action/auth'
 import Button from '../Button'
 const initialState = { address: '', city: '', pincode: '', phoneNo: '' }
@@ -14,15 +15,26 @@ function DelivaryDetails({ setStepper, setDelivaryDetails, addAddress }) {
     }
 
     const [data, setData] = useState(initialState)
-
+    const dispatch = useDispatch();
     const handleSubmit = () => {
         if (!data.address || !data.city || !data.phoneNo || !data.pincode) {
-            alert('Please enter all feilds');
+            toast.error('Please enter all the feild', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
             return;
         }
-        setStepper(1)
-        addAddres(data).then((res) => {
+        const id = toast.loading("Please wait...")
+        dispatch(addAddres(data)).then((res) => {
+            toast.update(id, { render: "Address Added", type: "success", isLoading: false, });
             setDelivaryDetails(res)
+            setStepper(1)
         })
     }
 
@@ -125,6 +137,17 @@ function DelivaryDetails({ setStepper, setDelivaryDetails, addAddress }) {
                 <div className="flex items-center justify-center flex-row w-full">
                     <div className="w-[30%]">
                         <Button action={handleSubmit} text="SAVE" />
+                        <ToastContainer
+                            position="top-right"
+                            autoClose={5000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            theme="dark" />
                     </div>
 
                 </div>

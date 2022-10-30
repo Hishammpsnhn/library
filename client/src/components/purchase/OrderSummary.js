@@ -7,7 +7,7 @@ import Button from '../Button'
 import CardSkeliton from '../skellitons/CardSkeliton';
 import OrderedProduct from './OrderedProduct';
 
-function OrderSummary({ setStepper, product, setProduct, setAddAddress, setAddResRadio,addresRadio }) {
+function OrderSummary({ setStepper, product, setProduct, setAddAddress, setAddresRadio, addresRadio }) {
     const userIsLogin = useSelector((state) => state.user.user);
     const Loading = useSelector((state) => state.products.isLoading)
 
@@ -29,16 +29,16 @@ function OrderSummary({ setStepper, product, setProduct, setAddAddress, setAddRe
     }, [])
     const total = product?.discount / 100 * product?.price;
     const handleRadioChange = (i) => {
-        setAddResRadio(i)
+        setAddresRadio(i)
     }
     const handleAddAdress = () => {
         setAddAddress(true)
         setStepper(0)
     }
-    const handleSubmit = ()=>{
-        if(addresRadio){
+    const handleSubmit = () => {
+        if (addresRadio >= 0) {
             setStepper(2)
-        }else{
+        } else {
             alert("select a address")
         }
     }

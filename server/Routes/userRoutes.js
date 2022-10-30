@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const { registerUser,logout, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp, addAdress } = require("../controllers/userControl");
+const { registerUser,logout, CheckLoginUser,forgotPasswordEmail,forgotPasswordOtp, addAdress,addressDelete } = require("../controllers/userControl");
 const { protect } = require('../middleware/protect');
 
 const router = express.Router();
@@ -45,5 +45,5 @@ router.post('/forgot-password/otp',forgotPasswordOtp)
 
 //add address
 router.route('/user-address').post(protect,addAdress)
-
+router.route('/:id/addressdelete').get(addressDelete);
 module.exports = router;

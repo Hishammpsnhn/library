@@ -9,7 +9,7 @@ function PurchaseItem() {
   const [stepper, setStepper] = useState(0)
   const [product, setProduct] = useState(null);
   const [addAddress, setAddAddress] = useState(false)
-  const [addresRadio, setAddResRadio] = useState(null)
+  const [addresRadio, setAddresRadio] = useState(null)
 
   const [delivaryDetails, setDelivaryDetails] = useState(null)
   return (
@@ -34,7 +34,7 @@ function PurchaseItem() {
             product={product}
             setProduct={setProduct}
             setAddAddress={setAddAddress}
-            setAddResRadio={setAddResRadio}
+            setAddresRadio={setAddresRadio}
             addresRadio={addresRadio}
           />}
         {stepper === 2 &&

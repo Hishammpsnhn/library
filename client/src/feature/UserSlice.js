@@ -8,7 +8,6 @@ export const UserSlice = createSlice({
   initialState,
   reducers: {
     User: (state, action) => {
-      
       state.user = action.payload
     }
   },
