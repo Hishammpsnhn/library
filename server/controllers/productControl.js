@@ -102,26 +102,21 @@ const review = async (req, res) => {
     const { comment } = req.body;
     let exist = false;
     let product = await productModel.findById(id);
-    product.reviews.every(async (item) => {
+    product.reviews.forEach(async (item) => {
         if (item.user.equals(req.user._id)) {
             if (rating) item.rating = rating
             if (comment) {
                 item.comment = comment;
-                // await productModel.findByIdAndUpdate(id, product, { new: true });
             }
             exist = true;
         }
     });
     const updatedProduct = await productModel.findByIdAndUpdate(id, product, { new: true });
-    //res.josn
-
     if (!exist) {
         console.log("not exist")
         if (rating) { product.reviews.push({ rating: rating, user: req.user._id }) }
         if (comment) { product.reviews.push({ comment: comment, user: req.user._id }) }
         product.save();
-        //  res.status(201).json({ messgae: "add new" })
-
     }
     const ratingCount = updatedProduct.reviews.length;
     let userRating = 0
@@ -130,12 +125,18 @@ const review = async (req, res) => {
     })
     product.rating = userRating / ratingCount;
     const updatedProduct2 = await productModel.findByIdAndUpdate(id, product, { new: true });
-    res.status(201).json(updatedProduct2)
+    if (updatedProduct2) {
+        updatedProduct2.reviews.forEach((item) => {
+            if (item.user.equals(req.user.id)) {
+                res.status(201).json(item)
+            }
+        })
+    }
 
 }
 
 const search = async (req, res) => {
-    console.log("called serac ")
+
     const keywords = req.query.search
         ? {
             $or: [
@@ -144,7 +145,7 @@ const search = async (req, res) => {
             ],
         }
         : {};
-  
+
     const product = await productModel
         .find(keywords)
         .find({ _id: { $ne: req.query._id } });
@@ -160,4 +161,4 @@ const getSciFiProduct = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search,getSciFiProduct }
+module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search, getSciFiProduct }

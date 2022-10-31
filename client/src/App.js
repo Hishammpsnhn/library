@@ -37,7 +37,7 @@ function App() {
           <Route path="/details/:id" element={<DetailsPage />} />
           <Route path="/purchase/:id" element={userIsLogin ? <PurchasePage /> : <Navigate replace to="/auth" />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/myorder/details/:id" element={<OrderDetails />} />
+          <Route path="/myorder/details/:id" element={ userIsLogin && <OrderDetails />} />
           {/* adminPages */}
           <Route path="/admin" element={<AdminHero />} />
 

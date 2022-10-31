@@ -26,14 +26,22 @@ export const myOrders = () => (dispatch) => {
 
 export const getSingleOrder = async (id) => {
     return new Promise(async (resolve, reject) => {
-       let {data} = await api.getSingleOrder(id)
-       resolve(data)
+        try {
+            let { data } = await api.getSingleOrder(id)
+            if (data) {
+                console.log("good")
+                resolve(data)
+            }
+        } catch (error) {
+            reject(error)
+
+        }
     })
 }
 export const returnProduct = async (id) => {
     return new Promise(async (resolve, reject) => {
-       let {data} = await api.returnProduct(id)
-       resolve(data)
+        let { data } = await api.returnProduct(id)
+        resolve(data)
     })
 }
 

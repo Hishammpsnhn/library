@@ -35,8 +35,6 @@ const addOrderItem = async (req, res) => {
         return result;
     }
     const returnDate = addDays(currentDate, 7);
-    console.log(returnDate)
-
     try {
         const product = await productModal.findById(orderItems.product)
         if (product.countInStock <= 0) {
@@ -77,10 +75,19 @@ const getMyOrders = async (req, res) => {
 // @access  Private
 const oneOrderProduct = async (req, res) => {
     const { id } = req.params
+    console.log(id)
     try {
         const order = await orderModal.findById(id)
-            .populate('ProductId')
-        res.status(200).json(order)
+        .populate('ProductId')
+        console.log(order)
+        const product = await productModal.findById(order.ProductId);
+        console.log(product)
+        if(product){
+            console.log("product found",product)
+            res.status(200).json(order)
+        }else{
+            res.status(404).json({message:"product not found"})
+        }
     } catch (error) {
         throw new Error(error)
     }

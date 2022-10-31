@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../styles'
 import Rating from '../Rating';
 
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { getSingleOrder } from '../../action/orderItem'
 import { review } from '../../action/ProductAction';
 import { useSelector } from 'react-redux';
@@ -12,27 +12,37 @@ function OrderIems() {
   const [rating, setRating] = useState(null)
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  const [reviewText,setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState('');
+  const [res, setRes] = useState(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    if (order) {
-      review({ rating: rating, id: order?.ProductId._id }).then((res) => {
-        getSingleOrder(id).then((order) => {
-          setOrder(order)
-        })
-      })
-    }
-  }, [rating])
 
   useEffect(() => {
     getSingleOrder(id).then((order) => {
       setOrder(order)
+      order.ProductId.reviews.forEach((element) => {
+        console.log(userIsLogin)
+        if (element.user == userIsLogin?._id) {
+          setRes(element)
+        }
+      });
     })
   }, [])
+
+  useEffect(() => {
+    if (order) {
+      review({ rating: rating, id: order?.ProductId._id }).then((res) => {
+        setRes(res)
+      })
+    }
+  }, [rating])
+
+
   const handleSubmit = () => {
     if (review) {
-      review({  id: order?.ProductId._id,comment:`${userIsLogin.name} : ${reviewText}` }).then((res) => {
+      review({ id: order?.ProductId._id, comment: `${userIsLogin.name} : ${reviewText}` }).then((res) => {
         console.log(res)
+        setRes(res)
       })
     }
   }
@@ -62,13 +72,13 @@ function OrderIems() {
         <div className='text-white' >
           <h2>Review</h2>
           <div className='flex flex-row text-center items-center justify-between'>
-            <Rating editing={true} setRating={setRating} rating={rating} value={order?.ProductId.rating} />
+            <Rating editing={true} setRating={setRating} rating={rating} value={res?.rating} />
             <p className='text-blue-800 cursor-pointer'>Write a review</p>
           </div>
         </div>
         <div>
-          <input type='text' className='' placeholder='add a review' onChange={(e)=> setReviewText(e.target.value)} />
-          <button className='bg-slate-400  text-black 'onClick={handleSubmit}>Submit</button>
+          <input type='text' className='' value={res?.comment} placeholder='add a review' onChange={(e) => setReviewText(e.target.value)} />
+          <button className='bg-slate-400  text-black ' onClick={handleSubmit}>Submit</button>
         </div>
       </div>
     </section>

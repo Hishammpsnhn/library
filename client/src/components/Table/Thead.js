@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import { getSingleOrder } from '../../action/orderItem';
 
 
@@ -12,25 +13,32 @@ function Thead({ setValue, index, image, name, price, status, id, handleEdit, my
         result.setDate(result.getDate() + days);
         return result;
     }
-    
+
     var one_day = 1000 * 60 * 60 * 24
     let currentDate = new Date();
     const returnDate = addDays(createdAt, 7);
-  
+
     if (currentDate.getMonth() == 11 && currentDate.getdate() > 25)
-    returnDate.setFullYear(returnDate.getFullYear() + 1)
+        returnDate.setFullYear(returnDate.getFullYear() + 1)
 
     var Result = Math.round(returnDate.getTime() - currentDate.getTime()) / (one_day);
     // To remove the decimals from the (Result) resulting days value
     var dayLeft = Result.toFixed(0);
     //var dayLeft = returnDate.getDate() - cDay;
-   
+
     if (dayLeft === 0) {
         dayLeft = 0
     }
 
     const handleMore = (id) => {
         navigate(`/myorder/details/${id}`)
+       // const ids = toast.loading("Please wait...")
+        // getSingleOrder(id).then((order) => {
+        //     toast.update(ids, { render: "success", type: "success", isLoading: false, });
+        // }).catch((err) => {
+        //     toast.update(ids, { render: "Product not found", type: "error", isLoading: false, });
+        
+        // })
     }
 
     return (
@@ -63,13 +71,26 @@ function Thead({ setValue, index, image, name, price, status, id, handleEdit, my
                     }
                     <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                         {myOrder ? (
-                            <button
-                                type="button"
-                                className="bg-slate-700  hover:opacity-80 w-20 p-2 rounded-md text-white"
-                                onClick={() => handleMore(id)}
-                            >
-                                More
-                            </button>
+                            <>
+                                <button
+                                    type="button"
+                                    className="bg-slate-700  hover:opacity-80 w-20 p-2 rounded-md text-white"
+                                    onClick={() => handleMore(id)}
+                                >
+                                    More
+                                </button>
+                                <ToastContainer
+                                    position="top-right"
+                                    autoClose={5000}
+                                    hideProgressBar={false}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss
+                                    draggable
+                                    pauseOnHover
+                                    theme="dark" />
+                            </>
                         ) : (
                             <button
                                 type="button"
