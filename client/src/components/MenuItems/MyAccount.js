@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addressDelete, logout } from '../action/auth'
-import { User } from '../feature/UserSlice';
-import Button from './Button';
+import { addressDelete, logout } from '../../action/auth'
+import { User } from '../../feature/UserSlice';
+import Button from '../Button';
 import { useNavigate } from 'react-router-dom'
 import { RiDeleteBin2Line } from 'react-icons/ri';
 import { toast, ToastContainer } from 'react-toastify';
@@ -43,15 +43,15 @@ function MyAccount() {
                 {userIsLogin && (
                     <>
                         <div className='flex flex-col items-center justify-center' >
-                            <img className='w-20 h-15 rounded-sm' src={userIsLogin?.pic} alt="not given" />
+                            <img className='w-20 h-15 rounded-sm' src={userIsLogin?.pic} alt="Image" />
                             <p className='text-lg font-medium' >{userIsLogin?.name}</p>
                             <p>{userIsLogin?.email}</p>
                         </div>
                         <div className='w-[80%]'>
-                            <h5 className='text-lg font-medium'>My Address :</h5>
+                            <h5 className='text-lg font-medium'>Address :</h5>
                             {
-                                address.map((item) => (
-                                    <div className=' w-full p-2 flex justify-between  border-solid border-2 border-gray-400'>
+                                address.map((item,i) => (
+                                    <div key={i} className=' w-full p-2 flex justify-between  border-solid border-2 border-gray-400'>
                                         <div>
                                             <div className=' flex flex-row justify-between text-lg font-medium capitalize '>
                                                 <p>{userIsLogin?.name},</p>                                                <p>{item.pincode}</p>

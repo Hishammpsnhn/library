@@ -4,6 +4,9 @@ const userModel = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const { Auth } = require('two-step-auth')
 
+// @desc  get sciFi catagory books
+// @route  get /api/product/scibooks
+// @access Private
 let mailmsg
 const CheckLoginUser = async (req, res, next) => {
   try {
@@ -53,6 +56,9 @@ const registerUser = async (req, res) => {
   }
 };
 
+// @desc  logout the user
+// @route  get /api/auth/logout
+// @access Private
 const logout = async (req, res) => {
   req.session.destroy(function (err) {
     if (err) {
@@ -62,6 +68,9 @@ const logout = async (req, res) => {
   })
 }
 
+// @desc   forgotPasswordEmail
+// @route  get /api/auth/forgot-password/email
+// @access Private
 const forgotPasswordEmail = async (req, res) => {
   const { email } = req.body
   if (!req.user) {
@@ -84,6 +93,9 @@ const forgotPasswordEmail = async (req, res) => {
   }
 }
 
+// @desc   forgotPasswordOtp
+// @route  get /api/auth/forgot-password/otp
+// @access Private
 const forgotPasswordOtp = async (req, res) => {
   const { otp } = req.body
   if (mailmsg) {
@@ -95,9 +107,13 @@ const forgotPasswordOtp = async (req, res) => {
       res.status(400)
       throw new Error("Incorrect otp")
     }
-
   }
 }
+
+
+// @desc   add address in the user
+// @route  get /api/auth//user-address
+// @access Private
 const addAdress = async (req, res) => {
   console.log(req.body)
   const user = await userModel.findById(req.user._id)
@@ -106,6 +122,10 @@ const addAdress = async (req, res) => {
   console.log(updatedUser)
   res.json(updatedUser)
 }
+
+// @desc   delete the address from the user
+// @route  get /api/auth/:id/addressdelete
+// @access Private
 const addressDelete = async (req, res) => {
   const user = await userModel.findById(req.user._id)
   if (user) {

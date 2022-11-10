@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { myOrders } from '../action/orderItem'
-import TableSkeliton from './skellitons/TableSkeliton'
-import Table from './Table/Table'
-import Thead from './Table/Thead'
+import { myOrders } from '../../action/orderItem'
+import TableSkeliton from '../skellitons/TableSkeliton'
+import Table from '../Table/Table'
+import Thead from '../Table/Thead'
 
 function MyOrders() {
-    const [orders, setOrders] = useState([])
-    console.log(orders)
     const { isLoading } = useSelector((state) => state.products)
+    
+    const [orders, setOrders] = useState([])
+    
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,12 +30,13 @@ function MyOrders() {
     )
 
     return (
-        <div className="  py-4 min-h-[68vh] sm:px-6 lg:px-8 overflow-x-scroll">
+        <div className="  py-4 min-h-[68vh] sm:px-6 lg:px-8 overflow-x-scroll md:overflow-x-hidden">
             <table className=" w-full m-auto text-center">
                 <Table myOrder={true} />
                 {orders.map((item, i) => {
                     return (
                         <Thead
+                            key={i}
                             returnLastDate={item.returnLastDate}
                             createdAt={item.createdAt}
                             name={item.orderItems.name}

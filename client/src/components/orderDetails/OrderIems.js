@@ -5,23 +5,28 @@ import Rating from '../Rating';
 import { useLocation, useParams } from 'react-router-dom'
 import { getSingleOrder } from '../../action/orderItem'
 import { review } from '../../action/ProductAction';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
+import TableSkeliton from '../skellitons/TableSkeliton';
 
 function OrderIems() {
+
   const userIsLogin = useSelector((state) => state.user.user)
+  const { isLoading } = useSelector((state) => state.products)
   const [rating, setRating] = useState(null)
-  const { id } = useParams();
   const [order, setOrder] = useState(null);
   const [reviewText, setReviewText] = useState('');
   const [res, setRes] = useState(null);
+  const [input, setInput] = useState(false);
+
+  const { id } = useParams();
   const location = useLocation();
-
-
+  const dispatch = useDispatch();
+  
   useEffect(() => {
-    getSingleOrder(id).then((order) => {
+    dispatch(getSingleOrder(id)).then((order) => {
       setOrder(order)
       order.ProductId.reviews.forEach((element) => {
-        console.log(userIsLogin)
         if (element.user == userIsLogin?._id) {
           setRes(element)
         }
@@ -41,13 +46,30 @@ function OrderIems() {
   const handleSubmit = () => {
     if (review) {
       review({ id: order?.ProductId._id, comment: `${userIsLogin.name} : ${reviewText}` }).then((res) => {
-        console.log(res)
+        toast('review added', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         setRes(res)
+
       })
     }
   }
+
+  if (isLoading) return (
+    <div className='w-full'>
+      < TableSkeliton />
+    </div>
+  )
+
   return (
-    <section className={`${styles.flexCenter} ${styles.boxWidth} mx-auto flex-col p-5 min-h-[78vh]  `}>
+   
       <div className="border border-blue-300 justify-between w-full sm:flex-row p-3 ">
         <div className="xs:flex justify-between">
 
@@ -73,15 +95,30 @@ function OrderIems() {
           <h2>Review</h2>
           <div className='flex flex-row text-center items-center justify-between'>
             <Rating editing={true} setRating={setRating} rating={rating} value={res?.rating} />
-            <p className='text-blue-800 cursor-pointer'>Write a review</p>
+            <p
+              className='text-blue-800 cursor-pointer'
+              onClick={() => setInput(prev => !prev)}
+            >Write a review</p>
           </div>
         </div>
         <div>
-          <input type='text' className='' value={res?.comment} placeholder='add a review' onChange={(e) => setReviewText(e.target.value)} />
-          <button className='bg-slate-400  text-black ' onClick={handleSubmit}>Submit</button>
+          {
+            input && (
+              <>
+                <input
+                  type='text'
+                  defaultValue={res?.comment?.split(":")[1]}
+                  placeholder='add a review'
+                  onChange={(e) => setReviewText(e.target.value)} />
+                <button className='bg-slate-400  text-black ' onClick={handleSubmit}>Submit</button>
+              </>
+            )
+          }
+          <ToastContainer />
         </div>
+
       </div>
-    </section>
+   
   )
 }
 

@@ -1,9 +1,11 @@
 const { default: mongoose } = require('mongoose');
 const productModel = require('../models/productModal')
-const userModel = require('../models/userModel');
 
+
+// @desc   Create a new Product in admini
+// @route  POST /api/product
+// @access Private
 const addProduct = async (req, res) => {
-
     const { bookname, author, description, image, launch, price, catagory, discount } = req.body;
     try {
         const products = await productModel.create({
@@ -22,20 +24,29 @@ const addProduct = async (req, res) => {
     }
 }
 
+// @desc   get all Products
+// @route  get /api/product
+// @access Private
 const getProduct = async (req, res) => {
     try {
-        const allProducts = await productModel.find()
-        allProducts.sort(function (a, b) {
-            return b.rating - a.rating;
-        });
+        const allProducts = await productModel.find({
+            'countInStock': {
+                $exists: 1
+            }
+        }).sort({
+            countInStock: -1
+        })
+
         res.status(200).json(allProducts)
     } catch (error) {
         console.log(error);
     }
 }
 
+// @desc   get one product details
+// @route  get /api/product/:id/getbook
+// @access Private
 const OneProduct = async (req, res) => {
-
     const { id } = req.params;
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post in this id');
@@ -45,45 +56,10 @@ const OneProduct = async (req, res) => {
         console.log(error)
     }
 }
-const updateProduct = async (req, res) => {
-    const {
-        bookname,
-        author,
-        description,
-        image,
-        launch,
-        price,
-        catagory,
-        discount,
-        countInStock,
-        reviews,
-        rating,
-        numReviews,
-    } = req.body;
-    const product = productModel.findById(req.params.id)
-    if (product) {
-        product.name = bookname
-        product.author = author
-        product.description = description
-        product.image = image
-        product.launch = launch
-        product.price = price
-        product.catagory = catagory
-        product.discount = discount
-        product.countInStock = countInStock
-        product.reviews = reviews
-        product.rating = rating
-        product.numReviews = numReviews
 
-        const updatedProduct = await product.save()
-        res.json(updatedProduct)
-    } else {
-        res.status(404)
-        throw new Error('product not found')
-    }
-}
-
-
+// @desc   edit one product details
+// @route  get /api/product/:id/edit
+// @access Private
 const editProduct = async (req, res) => {
     const { id } = req.params
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('no post with that id')
@@ -96,6 +72,9 @@ const editProduct = async (req, res) => {
 
 }
 
+// @desc   add raing and comment on product
+// @route  get /api/product/review
+// @access Private
 const review = async (req, res) => {
     const { id } = req.body;
     const { rating } = req.body;
@@ -135,8 +114,10 @@ const review = async (req, res) => {
 
 }
 
+// @desc   search for products -debounce
+// @route  get /api/product/search
+// @access Private
 const search = async (req, res) => {
-
     const keywords = req.query.search
         ? {
             $or: [
@@ -151,6 +132,11 @@ const search = async (req, res) => {
         .find({ _id: { $ne: req.query._id } });
     res.send(product);
 }
+
+
+// @desc  get sciFi catagory books
+// @route  get /api/product/scibooks
+// @access Private
 const getSciFiProduct = async (req, res) => {
     try {
         const products = await productModel.find({
@@ -161,4 +147,4 @@ const getSciFiProduct = async (req, res) => {
         console.log(error);
     }
 }
-module.exports = { getProduct, addProduct, updateProduct, editProduct, OneProduct, review, search, getSciFiProduct }
+module.exports = { getProduct, addProduct, editProduct, OneProduct, review, search, getSciFiProduct }

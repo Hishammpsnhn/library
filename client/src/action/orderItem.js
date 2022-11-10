@@ -9,7 +9,6 @@ export const allOrders = async () => {
     })
 }
 
-
 export const purcheseItem = async (datas) => {
     const { data } = await api.addOrderItem(datas);
     console.log(data)
@@ -24,12 +23,13 @@ export const myOrders = () => (dispatch) => {
     })
 }
 
-export const getSingleOrder = async (id) => {
+export const getSingleOrder = (id) => (dispatch) => {
     return new Promise(async (resolve, reject) => {
+        dispatch(isLoading(true))
         try {
             let { data } = await api.getSingleOrder(id)
             if (data) {
-                console.log("good")
+                dispatch(isLoading(false))
                 resolve(data)
             }
         } catch (error) {

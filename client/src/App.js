@@ -26,8 +26,8 @@ function App() {
 
   return (
     <div className="bg-primary w-full">
-      <Header />
       <BrowserRouter>
+      <Header />
         <Routes>
           {/* user pages */}
 
@@ -42,8 +42,8 @@ function App() {
           <Route path="/admin" element={<AdminHero />} />
 
         </Routes>
-      </BrowserRouter>
       <Footer />
+      </BrowserRouter>
     </div>
   );
 }

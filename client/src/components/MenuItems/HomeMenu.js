@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import CardSkeliton from "./skellitons/CardSkeliton";
-import { sciBooks } from "../action/ProductAction";
+import Card from "../Card";
+import CardSkeliton from "../skellitons/CardSkeliton";
+import { sciBooks } from "../../action/ProductAction";
 
 function Hero({ books, isLoading, sciFiBooks }) {
 

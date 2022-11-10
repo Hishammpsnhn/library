@@ -6,7 +6,7 @@ const data = [
     { item: "Add Product" },
     { item: "Edit Products" },
     { item: "Ordered Products" },
-    { item: "All Products" },
+
 ]
 
 function ListHero({value ,setValue}) {

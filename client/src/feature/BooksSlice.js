@@ -14,7 +14,6 @@ export const counterSlice = createSlice({
     addBooks: (state, action) => {
       allbooks = action.payload
       state.books = action.payload
-
     },
     editBook: (state, action) => {
       state.books = allbooks.map((post) => post._id === action.payload._id ? action.payload : post)

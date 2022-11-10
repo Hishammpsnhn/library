@@ -4,9 +4,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require('connect-mongo');
+const ProductRoute=  require('./Routes/productRoutes');
+const authRoute=  require('./Routes/userRoutes');
+const orderRoute= require('./Routes/orderRoute');
 
-
-dotenv.config()
+dotenv.config();
 const app = express();
 
 //accept json data
@@ -38,16 +40,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use((req, res, next) => {
-//   console.log(req.session)
-//   next();
-// })
-
-
 // Routes  
-app.use('/api/product', require('./Routes/productRoutes'));
-app.use('/api/auth', require('./Routes/userRoutes'));
-app.use('/api/orders',require('./Routes/orderRoute'));
+app.use('/api/product',ProductRoute);
+app.use('/api/auth', authRoute);
+app.use('/api/orders',orderRoute);
 
 //server and db setup 
 const PORT = process.env.PORT || 5000;

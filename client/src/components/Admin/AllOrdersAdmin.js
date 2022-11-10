@@ -19,7 +19,7 @@ function AllOrdersAdmin() {
                 allorders?.map((item, i) => (
                     <div className='w-full capitalize flex flex-row justify-between bg-white text-black font-poppins mb-1 p-2'>
                         <div className=''>
-                            <p><strong>Product ID :</strong> {item?.ProductId._id}</p>
+                            <p><strong>Product ID :</strong> {item?.ProductId?._id}</p>
                             <p><strong>User ID :</strong>  {item?.user}</p>
                             <p> <strong>Date of Purchase :</strong> {item?.createdAt}</p>
                             <p> <strong>Return Last Date :</strong> {item?.returnLastDate} </p>

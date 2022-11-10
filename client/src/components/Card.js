@@ -46,7 +46,7 @@ function Card(
             {`Author : ${author}`}
           </p>
           <p className="text-dimWhite font-poppins  text-base capitalize ">
-            {description}
+            { description.length > 15 ? (description.slice(0, 15)+'...'):description}
           </p>
           <p className="text-dimWhite font-poppins  text-base  ">
             {`Price : ${price}/day`}

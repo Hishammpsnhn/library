@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { getProduct, sciBooks } from "../../action/ProductAction";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import Hero from "../../components/Hero";
+import HomeMenu from "../../components/MenuItems/HomeMenu";
 import styles from "../../styles";
 import { useDispatch, useSelector } from "react-redux";
 import UserMenu from "../../components/UserMenu";
-import Table from "../../components/Table/Table";
 import { useNavigate } from "react-router-dom";
-import { CheckLoginUser, logout } from "../../action/auth";
-import { User } from "../../feature/UserSlice";
-import MyAccount from "../../components/MyAccount";
-import MyOrders from "../../components/MyOrders";
+import MyAccount from "../../components/MenuItems/MyAccount";
+import MyOrders from "../../components/MenuItems/MyOrders";
+import { toast, ToastContainer } from "react-toastify";
 
 function Home() {
-  const { books, isLoading } = useSelector((state) => state.products)
-  const [sciFiBooks, setSciFiBooks] = useState([])
+  const { books, isLoading } = useSelector((state) => state.products);
 
-  const [value, setValue] = useState(0)
+  const [sciFiBooks, setSciFiBooks] = useState([]);
+  const [value, setValue] = useState(0);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,7 +26,18 @@ function Home() {
   }, [])
   useEffect(() => {
     if (books.length === 0) {
-      dispatch(getProduct)
+      dispatch(getProduct).catch((err) => { 
+        toast.error('something went wrong', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      })
     }
   }, [])
 
@@ -37,6 +45,7 @@ function Home() {
   return (
     <>
       <div className="bg-primary w-full ">
+        <ToastContainer/>
         <div className={`${styles.flexCenter} ${styles.paddingX}`}>
         </div>
         <div className={` sticky top-0 z-10`}>
@@ -44,17 +53,14 @@ function Home() {
         </div>
         <div className="bg-gradient-to-r from-black via-slate-800 to-black  ">
           {value === 0 &&
-            <Hero
+            <HomeMenu
               books={books}
               isLoading={isLoading}
               sciFiBooks={sciFiBooks}
             />}
           {value === 1 && <MyAccount />}
           {value === 2 && <MyOrders />}
-
-
         </div>
-
       </div>
     </>
   );
