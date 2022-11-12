@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const API = 'http://localhost:5000'
-
 //product 
 export const getProduct = () => axios.get('/api/product')
 export const addProduct = (product) => axios.post('/api/product',product)

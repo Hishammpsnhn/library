@@ -9,8 +9,10 @@ export const CheckLoginUser = () => async (dispatch) => {
 }
 
 export const loginUser = (userInfo) => async (dispatch) => {
-    await api.loginUser(userInfo)
-    dispatch(CheckLoginUser())
+    return new Promise(async (resolve, reject) => {
+        await api.loginUser(userInfo)
+        dispatch(CheckLoginUser())
+    })
 }
 
 export const registerUser = (userInfo) => async (dispatch) => {
@@ -28,7 +30,6 @@ export const logout = async () => {
 //email check for send otp 
 export const forgotPasswordEmail = (email) => {
     return new Promise(async (resolve, reject) => {
-        console.log(email)
         let { data } = await api.forgotPasswordEmail({ email })
 
         resolve(data)

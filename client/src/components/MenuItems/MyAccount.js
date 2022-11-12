@@ -18,10 +18,9 @@ function MyAccount() {
 
     const handleLogout = () => {
         logout().then((res) => {
-            console.log(res)
+            navigate('/auth')
             localStorage.clear()
             dispatch(User(null))
-            navigate('/auth')
 
         });
     }

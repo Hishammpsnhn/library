@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { loginUser, registerUser } from "../action/auth";
 import Button from "./Button";
 import Input from "./Input";
@@ -25,20 +26,51 @@ function Auth() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (signUP) {
-      dispatch(registerUser(userData)).then(()=>{
-        setSignUP(false)
-      })
+      if (!userData.password || !userData.email || !userData.phone || !userData.username) {
+        toast.error('Fill all the Blanks', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        const ids = toast.loading("Please wait...")
+        dispatch(registerUser(userData)).then(() => {
+          toast.update(ids, { render: "Successfully Registered", type: "success", isLoading: false })
+          setSignUP(false)
+        })
+      }
     } else {
-      dispatch(loginUser(userData));
+      if (!userData.password || !userData.email) {
+        toast.error('Fill all the Blanks', {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        const ids = toast.loading("Please wait...")
+        dispatch(loginUser(userData)).then(() => {
+          toast.update(ids, { render: "Successfully Registered", type: "success", isLoading: false })
+        })
+      }
     }
   };
 
- const handleApiLogin= ()=>{
-  if(!user){
-    window.open("http://localhost:5000/api/auth/google","_self")
+  const handleApiLogin = () => {
+    if (!user) {
+      window.open("https://library-stock.herokuapp.com/api/auth/google", "_self")
+    }
   }
-  }
-  
+
   return (
     <div className="bg-slate-800 h-[100vh] flex justify-center items-center ">
       <div className="  md:w-[40%]  shadow-md bg-white rounded-md  p-5 flex flex-col items-center ">
@@ -52,8 +84,8 @@ function Auth() {
               {signUP && <Input text="phone no" type="number" handlechange={handlechange} name="phone" />}
               <Input text="Email" type="email" handlechange={handlechange} name="email" />
               <Input text="password" type="password" handlechange={handlechange} name="password" />
-              <p className="text-blue-700 text-right mb-2 cursor-pointer font-poppins hover:opacity-40 " 
-              onClick={()=> navigate('/forgot-password')}
+              <p className="text-blue-700 text-right mb-2 cursor-pointer font-poppins hover:opacity-40 "
+                onClick={() => navigate('/forgot-password')}
               >Forgot Password?</p>
               <Button
                 text={`${signUP ? "Sign Up" : "Login"}`}
@@ -66,6 +98,7 @@ function Auth() {
               <hr className="w-[44%] h-[2px]  bg-gray-300" />
             </div>
             <IntegrateButton action={handleApiLogin} />
+            <ToastContainer />
             <a>
               Don't have an account?
               <span
