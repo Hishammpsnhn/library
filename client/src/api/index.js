@@ -1,8 +1,9 @@
 import axios from 'axios';
-
+//const API ="https://library-stock.herokuapp.com"
+const API ="http://localhost:5000"
 //product 
-export const getProduct = () => axios.get('/api/product')
-export const addProduct = (product) => axios.post('/api/product',product)
+export const getProduct = () => axios.get(`https://library-stock.herokuapp.com/api/product`)
+export const addProduct = (product) => axios.post(`/api/product`,product)
 export const editProduct = (id,product) => axios.post(`/api/product/${id}/edit`,product)
 export const getOneProduct = (id) => axios.get(`/api/product/${id}/getbook`)
 

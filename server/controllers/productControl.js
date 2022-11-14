@@ -28,19 +28,7 @@ const addProduct = async (req, res) => {
 // @route  get /api/product
 // @access Private
 const getProduct = async (req, res) => {
-    try {
-        const allProducts = await productModel.find({
-            'countInStock': {
-                $exists: 1
-            }
-        }).sort({
-            countInStock: -1
-        })
-
-        res.status(200).json(allProducts)
-    } catch (error) {
-        console.log(error);
-    }
+   
 }
 
 // @desc   get one product details
