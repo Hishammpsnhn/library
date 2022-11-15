@@ -48,9 +48,6 @@ app.use('/api/product',ProductRoute);
 app.use('/api/auth', authRoute);
 app.use('/api/orders',orderRoute);
 
-app.get('/',(req,res) => {
-  res.send("library-stocks")
-})
 //server and db setup 
 const PORT = process.env.PORT || 5000;
 mongoose
