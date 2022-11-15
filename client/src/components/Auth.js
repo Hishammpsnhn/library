@@ -67,7 +67,7 @@ function Auth() {
 
   const handleApiLogin = () => {
     if (!user) {
-      window.open("https://library-stock.herokuapp.com/api/auth/google", "_self")
+      window.open("http://localhost:5000/api/auth/google", "_self")
     }
   }
 

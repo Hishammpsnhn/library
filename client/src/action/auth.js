@@ -3,21 +3,21 @@ import { User } from '../feature/UserSlice'
 
 export const CheckLoginUser = () => async (dispatch) => {
     let { data } = await api.CheckLoginUser()
+    console.log(data)
     // localStorage.setItem('profile', JSON.stringify(data))
     //    dispatch(User(JSON.parse(localStorage.getItem('profile'))))
     dispatch(User(data))
 }
 
 export const loginUser = (userInfo) => async (dispatch) => {
-    return new Promise(async (resolve, reject) => {
-        await api.loginUser(userInfo)
-        dispatch(CheckLoginUser())
-    })
+    await api.loginUser(userInfo)
+    dispatch(CheckLoginUser())
 }
 
 export const registerUser = (userInfo) => async (dispatch) => {
-    await api.registerUser(userInfo)
+   const {data} = await api.registerUser(userInfo)
     dispatch(CheckLoginUser())
+  
 }
 
 export const logout = async () => {
@@ -30,6 +30,7 @@ export const logout = async () => {
 //email check for send otp 
 export const forgotPasswordEmail = (email) => {
     return new Promise(async (resolve, reject) => {
+        console.log(email)
         let { data } = await api.forgotPasswordEmail({ email })
 
         resolve(data)

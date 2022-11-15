@@ -1,6 +1,6 @@
 import axios from 'axios';
 //const API ="https://library-stock.herokuapp.com"
-const API ="http://localhost:5000"
+const API ="https://git.heroku.com/library-stock.git"
 //product 
 export const getProduct = () => axios.get(`${API}/api/product`)
 export const addProduct = (product) => axios.post(`${API}/api/product`,product)

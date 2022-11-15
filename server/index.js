@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const cors = require("cors");
 const passport = require("passport");
 const MongoStore = require('connect-mongo');
 const ProductRoute=  require('./Routes/productRoutes');
@@ -13,6 +14,7 @@ const app = express();
 
 //accept json data
 app.use(express.json());
+app.use(cors());
 
 // Passport Config
 require('./config/passportConfig');
@@ -39,6 +41,7 @@ app.use(
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // Routes  
 app.use('/api/product',ProductRoute);

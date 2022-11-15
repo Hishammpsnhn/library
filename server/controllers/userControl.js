@@ -8,20 +8,14 @@ const { Auth } = require('two-step-auth')
 // @route  get /api/product/scibooks
 // @access Private
 let mailmsg
+
 const CheckLoginUser = async (req, res, next) => {
-  try {
+  console.log("cll check login")
+  console.log(req.user)
     if (req.user) {
       res.status(200).json(req.user)
     }
-  } catch (error) {
-    console.log(error)
-    res.status(201).json(
-      {
-        message: "authentication failed"
-      }
-    )
   }
-}
 
 const registerUser = async (req, res) => {
   console.log("register callled")
