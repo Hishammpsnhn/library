@@ -58,8 +58,12 @@ function Auth() {
         });
       } else {
         const ids = toast.loading("Please wait...")
-        dispatch(loginUser(userData)).then(() => {
+        dispatch(loginUser(userData)).then((msg) => {
+          console.log(msg)
           toast.update(ids, { render: "Successfully Registered", type: "success", isLoading: false })
+        },function(err){
+          console.log(err)
+          toast.update(ids, { render: "something wrong", type: "error", isLoading: false })
         })
       }
     }

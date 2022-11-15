@@ -3,15 +3,19 @@ import { User } from '../feature/UserSlice'
 
 export const CheckLoginUser = () => async (dispatch) => {
     let { data } = await api.CheckLoginUser()
-    console.log(data)
-    // localStorage.setItem('profile', JSON.stringify(data))
-    //    dispatch(User(JSON.parse(localStorage.getItem('profile'))))
     dispatch(User(data))
 }
 
 export const loginUser = (userInfo) => async (dispatch) => {
-    await api.loginUser(userInfo)
-    dispatch(CheckLoginUser())
+    return new Promise(async (resolve, reject) => {
+        try {
+            await api.loginUser(userInfo)
+            dispatch(CheckLoginUser())
+            resolve("heloo")
+        } catch (error) {
+            reject(error)
+        }
+    })
 }
 
 export const registerUser = (userInfo) => async (dispatch) => {

@@ -14,13 +14,13 @@ router.route("/").get(CheckLoginUser)
 //passport localStrategy Login 
 router.post('/login', passport.authenticate('local', {
   successRedirect: 'http://localhost:3000/',
-  failureRedirect: '/api/auth/login',
+  failureRedirect: '/login/failed',
   failureFlash: true
 }))
 
 //login failed
 router.get('/login/failed', (req, res) => {
-  res.status(404).json({ message: "login by gooogle failed" });
+  res.status(404).json({ message: "login failed" });
 })
 
 //login success 

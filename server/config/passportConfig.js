@@ -12,9 +12,15 @@ passport.use(
       try {
         if (!email || !password) throw new Error('not get credentials')
         const existingUser = await userModel.findOne({ email });
-        if (!existingUser) throw new Error("user doesn't existed");
+        if (!existingUser) {
+          done(null, null)
+          return;
+        }
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
-        if (!isPasswordCorrect) throw new Error("incorrect password")
+        if (!isPasswordCorrect) {
+          done(null, null)
+          return;
+        }
         if (isPasswordCorrect) {
           console.log("auth success")
           done(null, existingUser)
@@ -33,7 +39,7 @@ passport.use(
 //google strategy
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
-  
+
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: "/api/auth/google/callback"
 },
@@ -47,7 +53,7 @@ passport.use(new GoogleStrategy({
           name: profile._json.name,
           email: profile._json.email,
           pic: profile._json.picture,
-          phone:'not given'
+          phone: 'not given'
         });
         return done(null, user);
       }
